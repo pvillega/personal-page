@@ -19,8 +19,13 @@ object Application extends Controller {
   def index = Action {
     implicit request =>
       Logger.info("Application.index accessed")
-      Ok(views.html.index()) //TODO: open or closed?
+      Ok(views.html.index())
   }
+
+
+
+
+
 
 
   /**
@@ -37,5 +42,4 @@ object Application extends Controller {
     ).as("text/javascript")
   }
 
-             //TODO: on style.css extract variables for colors, mixins, etc!!
 }

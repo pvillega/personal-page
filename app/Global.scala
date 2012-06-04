@@ -7,6 +7,7 @@
  */
 
 import controllers.Application
+import models.Post
 import play.api._
 import mvc._
 import play.api.mvc.Results._
@@ -21,6 +22,10 @@ object Global extends GlobalSettings {
   override def beforeStart(app : play.api.Application) = {
     Logger.info("beforeStart executed for application %s".format(app.mode))
     super.beforeStart(app)
+
+    // Prepare in-memory structures
+
+    Post.init();
   }
 
   /**
@@ -41,10 +46,10 @@ object Global extends GlobalSettings {
 
     if(play.api.Play.isProd) {
       val mail = use[MailerPlugin].email
-      mail.setSubject("Error in Billeteo")
+      mail.setSubject("Error in Personal Page")
       mail.addRecipient("Administrator <%s>".format(Application.errorReportingMail), Application.errorReportingMail)
-      mail.addFrom("Billeteo Admin <noreply@billeteo.com>")
-      mail.send( "Error detected in Billeteo. \n Request: \n %s  \n\n Exception: \n %s \n\n %s".format(request, ex.getMessage, ex.getStackTrace.toList.mkString("\n")) )
+      mail.addFrom("Personal Page Admin <noreply@billeteo.com>")
+      mail.send( "Error detected in Personal Page. \n Request: \n %s  \n\n Exception: \n %s \n\n %s".format(request, ex.getMessage, ex.getStackTrace.toList.mkString("\n")) )
     }
 
     InternalServerError(
@@ -72,10 +77,10 @@ object Global extends GlobalSettings {
 
     if(play.api.Play.isProd) {
       val mail = use[MailerPlugin].email
-      mail.setSubject("Bad Request in Billeteo")
+      mail.setSubject("Bad Request in Personal Page")
       mail.addRecipient("Administrator <%s>".format(Application.errorReportingMail), Application.errorReportingMail)
-      mail.addFrom("Billeteo Admin <noreply@billeteo.com>")
-      mail.send( "Bad Request received in Billeteo\n. Request: %s  \n\n Error: \n %s".format(request, error) )
+      mail.addFrom("Personal Page Admin <noreply@billeteo.com>")
+      mail.send( "Bad Request received in Personal Page\n. Request: %s  \n\n Error: \n %s".format(request, error) )
     }
 
     NotFound(

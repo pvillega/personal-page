@@ -4,7 +4,7 @@ meta.author=Pere Villega
 
 # App strings
 app.title=Pere Villega
-app.pitch=
+app.pitch=pitch
 
 # Alerts
 alerts.warning=Warning!
@@ -41,15 +41,9 @@ notFound.text2=Parece que era un enlace antiguo o hay un error en la dirección.
 notFound.text5=Puedes usar el formulario adjunto para buscar la página o puedes
 notFound.textLink=volver a la página principal.
 
-# Footer
-footer.links=Billeteo
-footer.stayInTouch=Conecta con nosotros
-footer.stayInTouch.text=Billeteo tiene detrás a un equipo de personas como tu, así que si tienes alguna pregunta o sugerencia (por simple que sea) por favor, enviala
-footer.subscribe=Suscribete
-footer.subscribe.text=Suscribete a nuestra lista de correo y recibirás ofertas exclusivas de Billeteo
 
 # Footer Navigation
 back.top=Back to top
 
 # Rich tet
-richtText.preview=Vista Previa
+richtText.preview=Preview
