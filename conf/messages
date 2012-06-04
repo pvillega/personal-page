@@ -1,0 +1,55 @@
+# Meta
+meta.description=Personal page of Pere Villega, software developer
+meta.author=Pere Villega
+
+# App strings
+app.title=Pere Villega
+app.pitch=
+
+# Alerts
+alerts.warning=Warning!
+alerts.success=Ok, done!
+alerts.error=Oh, no!
+alerts.info=Info
+
+# Sections
+area.home=Home
+
+
+# navigation
+navigation.save=Save
+navigation.cancel=Cancel
+navigation.delete=Delete
+navigation.back=Back
+navigation.nothing=No results found
+
+# Pagination
+pagination.prev=<<
+pagination.next=>>
+
+# Error
+error.title=Error detectado
+error.header=Se ha roto
+error.text1=Lo sentimos mucho pero el servidor ha fallado. Hemos sido avisados del problema y lo estamos comprobando.
+error.text2=Mientras lo arreglamos, por favor,
+error.textLink=vuelve a la página principal.
+
+notFound.title=Página no encontrada
+notFound.header=URL no encontrada
+notFound.text1=Lo sentimos pero la página que intentabas ver no existe.
+notFound.text2=Parece que era un enlace antiguo o hay un error en la dirección.
+notFound.text5=Puedes usar el formulario adjunto para buscar la página o puedes
+notFound.textLink=volver a la página principal.
+
+# Footer
+footer.links=Billeteo
+footer.stayInTouch=Conecta con nosotros
+footer.stayInTouch.text=Billeteo tiene detrás a un equipo de personas como tu, así que si tienes alguna pregunta o sugerencia (por simple que sea) por favor, enviala
+footer.subscribe=Suscribete
+footer.subscribe.text=Suscribete a nuestra lista de correo y recibirás ofertas exclusivas de Billeteo
+
+# Footer Navigation
+back.top=Back to top
+
+# Rich tet
+richtText.preview=Vista Previa

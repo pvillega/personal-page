@@ -1,0 +1,102 @@
+//Colors
+
+//Font
+.siteFont {
+    font-family: 'Helvetica Neue','Open Sans',Arial,Helvetica,sans-serif;
+    font-size: 14px;
+}
+
+body, p, div, a, span {
+    .siteFont;
+}
+
+//Support
+.backgroundGradient(@start, @startpct, @end, @endpct, @startpctwk, @endpctwk){
+    background: @end;
+    background-image: linear-gradient(top, @start  @startpct, @end @endpct);
+    background-image: -o-linear-gradient(top, @start @startpct, @end @endpct);
+    background-image: -moz-linear-gradient(top, @start @startpct, @end @endpct);
+    background-image: -webkit-linear-gradient(top, @start @startpct, @end @endpct);
+    background-image: -ms-linear-gradient(top, @start @startpct, @end @endpct);
+    background-image: -webkit-gradient(
+    	linear,
+    	left bottom,
+    	left top,
+    	color-stop(@startpctwk, start),
+    	color-stop(@endpctwk, @end)
+    );
+}
+
+.borderRound(@radius) {
+    .border(@radius,@radius,@radius,@radius);
+}
+
+.borderRound(@radius1, @radius2, @radius3, @radius4) {
+    -moz-border-radius: @radius1 @radius2 @radius3 @radius4;
+    -webkit-border-radius: @radius1 @radius2 @radius3 @radius4;
+    border-radius: @radius1 @radius2 @radius3 @radius4;
+    behavior: url(ie-css3.htc);
+}
+
+.boxSizing(@type) {
+    -moz-box-sizing: @type;
+    -webkit-box-sizing: @type;
+    box-sizing: @type;
+}
+
+.boxShadow(@h, @v, @blur, @spread: 0, @color){
+  -moz-box-shadow: @h @v @blur @spread @color;
+  -webkit-box-shadow:  @h @v @blur @spread @color;
+  box-shadow:  @h @v @blur @spread @color;
+  behavior: url(ie-css3.htc);
+}
+
+.boxShadowInset(@h, @v, @blur, @spread: 0, @color){
+  -moz-box-shadow: @h @v @blur @spread @color inset;
+  -webkit-box-shadow:  @h @v @blur @spread @color inset;
+  box-shadow:  @h @v @blur @spread @color inset;
+  behavior: url(ie-css3.htc);
+}
+
+// Styles
+
+
+// Common, includes sticky footer from  http://www.cssstickyfooter.com/
+
+
+
+
+
+/* ===== Primary Styles ====================================================== */
+
+
+// Landscape phones and down
+@media (max-width: 480px) {
+
+
+}
+
+// Landscape phone to portrait tablet
+@media (max-width: 768px) {
+
+}
+
+// Portrait tablet to landscape and desktop
+@media (min-width: 768px) and (max-width: 980px) {
+
+}
+
+// Large desktop
+@media (min-width: 1200px) {
+
+}
+
+
+
+
+
+
+
+
+
+

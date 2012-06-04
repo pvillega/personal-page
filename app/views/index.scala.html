@@ -1,7 +1,9 @@
-@(message: String)
+@()(implicit request: play.api.mvc.RequestHeader)
 
-@main("Welcome to Play 2.0") {
-    
-    @play20.welcome(message)
-    
+        @* CACHE THE CONTENT?? IT'S STATIC!! *@
+
+@main(Messages("app.title"), "menuHomeArea") {
+
+
+
 }

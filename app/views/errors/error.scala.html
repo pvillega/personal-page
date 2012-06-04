@@ -1,0 +1,12 @@
+@(ex: Throwable)(implicit request: play.api.mvc.RequestHeader)
+
+@main(Messages("error.title")) {
+
+    <header class="humongous mainheader">
+        <div class="inner">
+            <h1>@Messages("error.header") <span frown>:(</span></h1>
+            <p class="left">@Messages("error.text1")</p>
+            <p class="left">@Messages("error.text2") <a class="pjaxLink" href="@routes.Application.index()">@Messages("error.textLink")</a></p>
+        </div>
+    </header>
+}
