@@ -1,0 +1,64 @@
+@(id: Int, linkForm: Form[models.Link])(implicit request: play.api.mvc.RequestHeader)
+
+@import helper._
+@import helper.twitterBootstrap._
+
+@implicitField = @{ FieldConstructor(views.html.tag.formElement.f) }
+
+@import tag._
+
+@layout(Messages("area.manageLinks")) {
+    <div class="row">
+        <div class="span9">
+            <h4 class="index">@Messages("links.edit")</h4>
+        </div>
+    </div>
+    <div class="row">
+        <div class="span1 offset8">
+            @helper.form(action = routes.Management.deleteLink(id)) {
+                <input type="submit" class="btn btn-danger" value="@Messages("navigation.delete")" />
+            }
+        </div>
+    </div>
+    @helper.form(action = routes.Management.updateLink(id), 'class -> "well") {
+
+        <input type="hidden" name="id" id="id" value="@id"/>
+        <input type="hidden" name="added" id="added" value="@(new java.util.Date().format("yyyy-MM-dd"))"/>
+
+        @inputText(
+            linkForm("link"),
+            '_label -> Messages("links.edit.link"),
+            '_error -> linkForm.globalError
+        )
+
+        @inputText(
+            linkForm("category"),
+            '_label -> Messages("links.edit.category"),
+            '_error -> linkForm.globalError
+        )
+
+        @checkbox(
+            linkForm("done"),
+            '_label -> Messages("links.edit.done"),
+            '_error -> linkForm.globalError
+        )
+
+        @checkbox(
+            linkForm("archive"),
+            '_label -> Messages("links.edit.archive"),
+            '_error -> linkForm.globalError
+        )
+
+        @richTextEditor("comment",
+            linkForm("comment"),
+            '_label -> Messages("links.edit.comment"),
+            '_error -> linkForm.globalError
+        )
+
+        <div class="form-actions">
+            <a href="@routes.Management.listLinks()" class="btn pjaxLink">@Messages("navigation.back")</a>
+            <input type="submit" class="btn btn-primary" value="@Messages("navigation.save")">
+        </div>
+
+    }
+}

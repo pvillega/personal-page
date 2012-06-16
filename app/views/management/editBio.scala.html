@@ -1,0 +1,37 @@
+@(bioForm: Form[models.Bio])(implicit request: play.api.mvc.RequestHeader)
+
+@import helper._
+@import helper.twitterBootstrap._
+
+@implicitField = @{ FieldConstructor(views.html.tag.formElement.f) }
+
+@import tag._
+
+@layout(Messages("area.editBio")) {
+    <div class="row">
+        <div class="span9">
+            <h4 class="index">@Messages("area.editBio")</h4>
+        </div>
+    </div>
+    @helper.form(action = routes.Management.saveBio(), 'class -> "well") {
+
+        @richTextEditor(
+            "short",
+            bioForm("short"),
+            '_label -> Messages("bio.edit.short"),
+            '_error -> bioForm.globalError
+        )
+        <hr/>
+        @richTextEditor(
+            "full",
+            bioForm("full"),
+            '_label -> Messages("bio.edit.full"),
+            '_error -> bioForm.globalError
+        )
+
+        <div class="form-actions">
+            <input type="submit" class="btn btn-primary" value="@Messages("navigation.save")">
+        </div>
+
+    }
+}

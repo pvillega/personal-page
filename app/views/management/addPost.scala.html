@@ -1,0 +1,42 @@
+@(postForm: Form[models.PostText])(implicit request: play.api.mvc.RequestHeader)
+
+@import helper._
+@import helper.twitterBootstrap._
+
+@implicitField = @{ FieldConstructor(views.html.tag.formElement.f) }
+
+@import tag._
+
+@layout(Messages("area.managePosts")) {
+    <div class="row">
+        <div class="span9">
+            <h4 class="index">@Messages("posts.add")</h4>
+        </div>
+    </div>
+    @helper.form(action = routes.Management.savePost(), 'class -> "well") {
+
+        @inputText(
+            postForm("title"),
+            '_label -> Messages("posts.edit.title"),
+            '_error -> postForm.globalError
+        )
+
+        @inputText(
+        postForm("tags"),
+        '_label -> Messages("posts.edit.tags"),
+        '_error -> postForm.globalError
+        )
+
+        @richTextEditor("rte",
+            postForm("content"),
+            '_label -> Messages("posts.edit.content"),
+            '_error -> postForm.globalError
+        )
+
+        <div class="form-actions">
+            <a href="@routes.Management.listPosts()" class="btn pjaxLink">@Messages("navigation.back")</a>
+            <input type="submit" class="btn btn-primary" value="@Messages("navigation.save")">
+        </div>
+
+    }
+}

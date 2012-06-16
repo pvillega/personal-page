@@ -11,7 +11,7 @@ object ApplicationBuild extends Build {
       // https://github.com/typesafehub/play-plugins/tree/master/mailer
       "com.typesafe" %% "play-plugins-mailer" % "2.0.2",
       // https://github.com/mumoshu/play2-memcached
-      "com.github.mumoshu" %% "play2-memcached" % "0.2-SNAPSHOT"
+      "com.github.mumoshu" %% "play2-memcached" % "0.2.1-SNAPSHOT"
     )
 
     val main = PlayProject(appName, appVersion, appDependencies, mainLang = SCALA).settings(

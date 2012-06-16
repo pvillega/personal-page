@@ -3,10 +3,43 @@
 # ~~~~
 
 # Static pages
-GET     /                           controllers.Application.index
+GET     /                        controllers.Application.index
+GET     /projects                controllers.Application.projects()
+GET     /archive                 controllers.Application.archive()
+GET     /about                   controllers.Application.fullBio()
+GET     /blog                    controllers.Application.blog(page: Int ?= 0)
+GET     /post/:year/:month/:day/:id/:slug      controllers.Application.post(id: Int, slug: String, year: String, month: String, day: String)
+GET     /tagged/:tag             controllers.Application.tagged(tag: String, page: Int ?= 0)
+GET     /rss                     controllers.Application.rss()
+GET     /sitemap                 controllers.Application.sitemap()
 
-# Javascript routing
-GET     /assets/javascripts/routes          controllers.Application.javascriptRoutes
+# Management - Available only on dev mode
+GET     /edit-quotes               controllers.Management.editQuotes()
+POST    /edit-quotes/send          controllers.Management.saveQuotes()
+GET     /list-posts                controllers.Management.listPosts()
+GET     /add-post                controllers.Management.addPost()
+POST    /add-post/send           controllers.Management.savePost()
+GET     /edit-post/:id                controllers.Management.editPost(id: Int)
+POST    /edit-post/:id/send           controllers.Management.updatePost(id: Int)
+POST    /delete-post/:id         controllers.Management.deletePost(id: Int)
+
+GET     /edit-bio                controllers.Management.editBio()
+POST    /edit-bio/send           controllers.Management.saveBio()
+
+GET     /list-projects                controllers.Management.listProjects()
+GET     /add-project                controllers.Management.addProject()
+POST    /add-project/send           controllers.Management.saveProject()
+GET     /edit-project/:id                controllers.Management.editProject(id: Int)
+POST    /edit-project/:id/send           controllers.Management.updateProject(id: Int)
+POST    /delete-project/:id         controllers.Management.deleteProject(id: Int)
+
+GET     /list-links                controllers.Management.listLinks()
+GET     /add-link                controllers.Management.addLink()
+POST    /add-link/send           controllers.Management.saveLink()
+GET     /edit-link/:id                controllers.Management.editLink(id: Int)
+POST    /edit-link/:id/send           controllers.Management.updateLink(id: Int)
+POST    /delete-link/:id         controllers.Management.deleteLink(id: Int)
+
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)

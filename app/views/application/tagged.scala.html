@@ -1,0 +1,32 @@
+@(list: List[models.Post], previous: Boolean, next: Boolean, page: Int, searchTag: String)(implicit request: play.api.mvc.RequestHeader)
+
+@import tag._
+
+@layout(Messages("area.tagged", searchTag)) {
+    <div class="row">
+        <div class="span9">
+            <h4 class="index">@Messages("area.tagged", searchTag)</h4>
+        </div>
+    </div>
+    @if(list.isEmpty) {
+        <div class="row">
+            <div class="span9">
+                <p>@Messages("posts.notFound")</p>
+            </div>
+        </div>
+    } else {
+        @list.map { post =>
+                @summaryPost(post)
+        }
+    }
+
+
+    <div class="row">
+        <div class="span2">
+           @if(previous){ <a href="@routes.Application.blog(page - 1)" class="pjaxLink">@Messages("posts.newer")</a> } else { &nbsp; }
+        </div>
+        <div class="span2 offset5">
+            @if(next) { <a href="@routes.Application.blog(page + 1)" class="pjaxLink">@Messages("posts.older")</a> }
+        </div>
+    </div>
+}

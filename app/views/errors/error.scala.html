@@ -2,11 +2,12 @@
 
 @main(Messages("error.title")) {
 
-    <header class="humongous mainheader">
-        <div class="inner">
-            <h1>@Messages("error.header") <span frown>:(</span></h1>
-            <p class="left">@Messages("error.text1")</p>
-            <p class="left">@Messages("error.text2") <a class="pjaxLink" href="@routes.Application.index()">@Messages("error.textLink")</a></p>
+    <div class="row">
+        <div class="span12 error">
+            <h1>@Messages("error.title")</h1>
+            <span>&nbsp;</span>
+            <p>@Html(Messages("error.text"))</p>
+            <a href="@routes.Application.index" class="pjaxLink">@Messages("error.back")</a>
         </div>
-    </header>
+    </div>
 }

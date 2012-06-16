@@ -1,0 +1,42 @@
+@()
+
+@import play.api.Play.current
+
+<div id="secondary" class="sidebar"> @* for accessibility *@
+    <div class="row">
+        <div class="span3">
+            <img src="@play.api.Play.configuration.getString("avatar.sidebar.url").getOrElse("")" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="span3"><h2>@Messages("sidebar.title")</h2></div>
+    </div>
+    <div class="row">
+        <div class="span3">
+            <p>@Messages("sidebar.description")</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="span3">
+            <a href="@routes.Application.fullBio()" class="pjaxLink">@Messages("sidebar.more") &nbsp;&nbsp;&gt;</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="span3"><a href="https://twitter.com/pvillega" rel="tooltip" title="Twitter"><img src="@routes.Assets.at("/images/sidebar/twitter_small.png")" />&nbsp;@@pvillega</a></div>
+    </div>
+    <div class="row">
+        <div class="span3"><a href="mailto:pere.villega@@gmail.com" rel="tooltip" title="Email"><img src="@routes.Assets.at("/images/sidebar/mail_small.png")" />&nbsp;Contact me!</div>
+    </div>
+    <div class="row">
+        <div class="span3"><a href="https://github.com/pvillega" rel="tooltip" title="Github"><img src="@routes.Assets.at("/images/sidebar/github_small.png")" alt="Github"/>&nbsp;Github</a></div>
+    </div>
+    <div class="row">
+        <div class="span3"><a href="http://stackoverflow.com/users/116791/pere-villega" rel="tooltip" title="Stack Overflow"><img src="@routes.Assets.at("/images/sidebar/so_small.png")" alt="Stack Overflow"/>&nbsp;Stack Overflow</a></div>
+    </div>
+
+
+    <div class="row">
+        <div class="span3"><a href="@routes.Application.rss()" rel="tooltip" title="@Messages("area.rss")"><img src="@routes.Assets.at("/images/sidebar/rss_small.png")" />&nbsp;@Messages("area.rss")</a></div>
+    </div>
+</div>
+

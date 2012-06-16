@@ -1,0 +1,20 @@
+@()
+
+@import play.api.Play.current
+
+<div class="tweet"></div>
+<script type='text/javascript'>
+    $(function(){
+        $(".tweet").tweet({
+            username: "@play.api.Play.configuration.getString("twitter.username").getOrElse("")",
+            join_text: "auto",
+            count: 6,
+            auto_join_text_default: "",
+            auto_join_text_ed: "",
+            auto_join_text_ing: "",
+            auto_join_text_reply: "",
+            auto_join_text_url: "",
+            loading_text: "loading tweets..."
+        });
+    });
+</script>

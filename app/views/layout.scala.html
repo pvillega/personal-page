@@ -1,0 +1,17 @@
+@(title: String)(content: Html)(implicit request: play.api.mvc.RequestHeader)
+
+@import tag._
+
+@main(title) {
+        @navbar()
+        <div class="row">
+            <div class="span3 hideMobile">
+                @sidebar()
+            </div>
+            <div class="span9">
+                <div id="content"> @* for accessibility *@
+                    @content
+                </div>
+            </div>
+        </div>
+}

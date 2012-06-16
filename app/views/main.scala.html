@@ -1,15 +1,15 @@
-@(title: String, menu: String = "menuHomeArea")(content: Html)(implicit request: play.api.mvc.RequestHeader)
-
-@* This page should have no logic at all to be able to display error pages, otherwise we may enter an error loop situation *@
+@(title: String)(content: Html)(implicit request: play.api.mvc.RequestHeader)
 
 @import tag._
 
-@* check for the pjax header. This should only be used on GET requests (so no notifications raised). It sets the menu bar selected item *@
+@* This page should have no logic at all to be able to display error pages, otherwise we may enter an error loop situation *@
+
+@* check for the pjax header. This should only be used on GET requests (so no notifications raised) *@
 @if(request.headers.get("X-PJAX").isDefined) {
-<title xmlns="http://www.w3.org/1999/html">@title</title>
+    <title>@title</title>
 
     @content
-    <script>setNavigationBar('@title', '@menu');</script>
+
 } else {
 @* normal request, not pjax *@
 
@@ -33,7 +33,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
         <!-- Add reference to Google fonts - see http://www.google.com/webfonts -->
-
+        <link href='http://fonts.googleapis.com/css?family=Crafty+Girls' rel='stylesheet' type='text/css'>
+        <link href='http://fonts.googleapis.com/css?family=Questrial' rel='stylesheet' type='text/css'>
 
         @* Both bootstrap.min.css and responsive.min.css are merged together to reduce css requests *@
         <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/bootstrap.min.css")">
@@ -56,81 +57,40 @@
         <!--[if lt IE 7]><p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://browsehappy.com/">Upgrade to a different browser</a> or
             <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to experience this site.</p><![endif]-->
 
+        @* assistive navigation *@
+        <nav role="navigation" id="access">
+            <h3 class="assistive-text">@Messages("assistive.main")</h3>
+            <div class="skip-link"><a title="Skip to primary content" href="#content" class="assistive-text">@Messages("assistive.primary")</a></div>
+            <div class="skip-link"><a title="Skip to secondary content" href="#secondary" class="assistive-text">@Messages("assistive.secondary")</a></div>
+        </nav>
 
         @* ********************************************************************************************************** *@
-
-        @* Top menu bar *@
-        <div class="navbar navbar-fixed-top">
-            <div class="navbar-inner">
-                <div class="container">
-
-                    <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
-                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </a>
-
-                    <!-- Be sure to leave the brand out there if you want it shown -->
-                    <a class="brand pjaxLink" href="@routes.Application.index()">Pere Villega</a>
-
-                    <!-- Everything you want hidden at 940px or less, place within here -->
-                    <div class="nav-collapse">
-                        <ul class="nav"></ul>
-                        <ul class="nav pull-right">
-                            <li id="menuHomeArea" class="active"><a class="pjaxLink" href="@routes.Application.index()">@Messages("area.home")</a></li>
-                            <li class="divider-vertical"></li>
-                        </ul>
-                        <ul class="nav pull-right">
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div id="wrap">
-        <div id="main">
-            @* Top header *@
-            <header id="@menu">
-                <div class="inner">
-                    <div class="container">
-                        <h1 id="headerBarText">@title</h1>
-                    </div>
-                </div>
-            </header>
-
-            @* Main content area *@
-            <div id="mainContainer" class="container">
-                @* Notifications *@
-                @notice(request.flash)
-
+        @* Main content area *@
+        <div id="mainContent" class="container">
+				@notice(request.flash)
                 @content
-            </div>
-        </div><!-- main -->
-        </div><!-- wrap -->
+        </div>
+
 
         @* footer, out of main container to be rendered with Pjax requests *@
         <footer>
             <div class="inner">
                 <div class="container">
                     <div class="row">
-
-                    </div> <!-- /row -->
-                </div> <!-- /container -->
-            </div>
-
-            <div class="copyright">
-                <div class="inner">
-                    <div class="container">
-                        <div class="row">
-                            <div class="span4"><p>&copy; 2012 Pere Villega</p></div>
-                            <div class="span8"><p class="pull-right"><a href="#">@Messages("back.top")</a></p></div>
+                        <div class="span4">
+                            &copy; 2012 Pere Villega
+                            <br>
+                            <a href="https://github.com/pvillega/personal-page">@Messages("footer.source")</a>
+                        </div>
+                        <div class="span4 offset4 ">
+                            <a href="#">@Messages("footer.back.top")</a>
                         </div>
                     </div>
                 </div>
             </div>
         </footer>
-
+        @* link to sitemap *@
+        <a href="@routes.Application.sitemap()">&nbsp;</a>
 
 
         @* ********************************************************************************************************** *@
@@ -142,11 +102,8 @@
         <script type="text/javascript">var googleAnalyticsCode= '@play.api.Play.current.configuration.getString("google.analytics").getOrElse("")';</script>
         @* we added any javascript tools or jquery plugins used into bootstrap.min.js (all minified) to open less connections from the client *@
         <script src="@routes.Assets.at("javascripts/bootstrap.min.js")" type="text/javascript"></script>
-        @* load javascript routes *@
-        <script type="text/javascript" src="@routes.Application.javascriptRoutes"></script>
         @* our javascript *@
         <script src="@routes.Assets.at("javascripts/scripts.min.js")" type="text/javascript"></script>
-        <script>setNavigationBar('@title', '@menu');</script>
     </body>
 </html>
 }

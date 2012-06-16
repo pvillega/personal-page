@@ -1,0 +1,7 @@
+@(bio: String)(implicit request: play.api.mvc.RequestHeader)
+
+@import tag._
+
+@layout(Messages("area.bio")) {
+    @markdownShow("fbio", bio)
+}

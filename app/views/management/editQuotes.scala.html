@@ -1,0 +1,89 @@
+@(quotesForm: Form[models.QuoteForm])(implicit request: play.api.mvc.RequestHeader)
+
+@import helper._
+@import helper.twitterBootstrap._
+
+@implicitField = @{ FieldConstructor(views.html.tag.formElement.f) }
+
+@import tag._
+
+
+
+@quoteField(field: Field, className: String = "quote") = {
+    @input(field, '_label -> Messages("quotes.edit.quote"), '_class -> className) { (id, name, value, _) =>
+        <input type="text" name="@name" value="@value">
+        <a class="deleteQuote btn btn-danger">@Messages("quotes.edit.remove")</a>
+    }
+}
+
+@layout(Messages("area.manageQuotes")) {
+    <div class="row">
+        <div class="span9">
+            <h4 class="index">@Messages("quotes.edit")</h4>
+        </div>
+    </div>
+    @helper.form(action = routes.Management.saveQuotes(), 'class -> "well") {
+        <div class="quotes">
+            <div class="clearfix">
+                <div class="input">
+                    <a class="addQuote btn btn-success">@Messages("quotes.edit.add")</a>
+                </div>
+            </div>
+            <br/>
+
+            @repeat(quotesForm("quote"), min = 0) { quote =>
+                @quoteField(quote)
+            }
+
+            @**
+            * Keep an hidden block that will be used as template for Javascript copy code
+            **@
+            @quoteField(
+                quotesForm("quote[x]"),
+                className = "quote_template"
+            )
+        </div>
+        <div class="form-actions">
+            <input type="submit" class="btn btn-primary" value="@Messages("navigation.save")">
+        </div>
+
+    }
+
+    <script type="text/javascript" charset="utf-8">
+        $(function() {
+
+        $('.deleteQuote').live('click', function(e) {
+            var quotes = $(this).parents('.quotes')
+            $(this).parents('.quote').remove()
+            renumber(quotes)
+        })
+
+        $('.addQuote').live('click', function(e) {
+            var quotes = $(this).parents('.quotes')
+            var template = $('.quote_template', quotes)
+            template.before('<div class="clearfix quote">' + template.html() + '</div>')
+            renumber(quotes)
+        })
+
+
+        // -- renumber fields
+
+        // Rename fields to have a coherent payload like:
+        //
+        // quote[0]
+        // quote[1]
+        // quote[2]
+        // ...
+        //
+        // This is probably not the easiest way to do it. A jQuery plugin would help.
+
+        var renumber = function(quotes) {
+            $('.quote input').each(function(i) {
+                $(this).attr('name', $(this).attr('name').replace(/quote\[.+\]/g, 'quote[' + i + ']'))
+            })
+        }
+
+        });
+
+    </script>
+}

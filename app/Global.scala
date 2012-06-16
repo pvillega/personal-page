@@ -7,7 +7,7 @@
  */
 
 import controllers.Application
-import models.Post
+import models._
 import play.api._
 import mvc._
 import play.api.mvc.Results._
@@ -22,19 +22,20 @@ object Global extends GlobalSettings {
   override def beforeStart(app : play.api.Application) = {
     Logger.info("beforeStart executed for application %s".format(app.mode))
     super.beforeStart(app)
-
-    // Prepare in-memory structures
-
-    Post.init();
   }
 
   /**
    * Executed on start of application
-   * We load DB data in here
    */
   override def onStart(app: Application) {
     Logger.info("onStart executed for application %s".format(app.mode))
     super.onStart(app)
+    Logger.info("onStart - forcing items to go into cache")
+    Bio.init()
+    Link.init()
+    Project.init()
+    Post.init()
+    Quote.init()
   }
 
   /**

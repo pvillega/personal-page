@@ -1,0 +1,62 @@
+@(projectForm: Form[models.Project])(implicit request: play.api.mvc.RequestHeader)
+
+@import helper._
+@import helper.twitterBootstrap._
+
+@implicitField = @{ FieldConstructor(views.html.tag.formElement.f) }
+
+@import tag._
+
+@layout(Messages("area.manageProjects")) {
+    <div class="row">
+        <div class="span9">
+            <h4 class="index">@Messages("projects.add")</h4>
+        </div>
+    </div>
+
+    @helper.form(action = routes.Management.saveProject(), 'class -> "well") {
+
+        <input type="hidden" name="id" id="id" value="-1"/>
+
+        @inputText(
+            projectForm("name"),
+            '_label -> Messages("projects.edit.name"),
+            '_error -> projectForm.globalError
+        )
+
+        @inputText(
+            projectForm("image"),
+            '_label -> Messages("projects.edit.image"),
+            '_error -> projectForm.globalError
+        )
+
+        @inputText(
+            projectForm("link"),
+            '_label -> Messages("projects.edit.link"),
+            '_error -> projectForm.globalError
+        )
+
+        @inputText(
+            projectForm("added"),
+            '_label -> Messages("projects.edit.added"),
+            '_error -> projectForm.globalError
+        )
+
+        @richTextEditor("status",
+            projectForm("status"),
+            '_label -> Messages("projects.edit.status"),
+            '_error -> projectForm.globalError
+        )
+        @richTextEditor("comment",
+            projectForm("comment"),
+            '_label -> Messages("projects.edit.comment"),
+            '_error -> projectForm.globalError
+        )
+
+        <div class="form-actions">
+            <a href="@routes.Management.listProjects()" class="btn pjaxLink">@Messages("navigation.back")</a>
+            <input type="submit" class="btn btn-primary" value="@Messages("navigation.save")">
+        </div>
+
+    }
+}

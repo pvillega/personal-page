@@ -1,0 +1,43 @@
+@(list: List[models.Link])(implicit request: play.api.mvc.RequestHeader)
+
+
+@import tag._
+
+@layout(Messages("area.manageLinks")) {
+    <div class="row">
+        <div class="span9">
+            <h4 class="index">@Messages("links.list")</h4>
+        </div>
+    </div>
+    <div class="row">
+        <div class="span9">
+            <a href="@routes.Management.addLink()" class="btn btn-info pjaxLink">@Messages("links.add")</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="span9">
+            &nbsp;
+        </div>
+    </div>
+
+
+    @list.map { l =>
+        <div class="row">
+            <div class="span5">
+                <a href="@l.link">@l.link</a>
+            </div>
+            <div class="span1">
+                @l.done
+            </div>
+            <div class="span2">
+                (@l.added.format("dd-MM-yyyy"))
+                <a href="@routes.Management.editLink(l.id)" class="btn btn-success pjaxLink">@Messages("navigation.edit")</a>
+            </div>
+            <div class="span1">
+                @helper.form(action = routes.Management.deleteLink(l.id)) {
+                <input type="submit" class="btn btn-danger" value="@Messages("navigation.delete")" />
+                }
+            </div>
+        </div>
+    }
+}

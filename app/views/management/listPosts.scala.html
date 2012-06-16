@@ -1,0 +1,40 @@
+@(list: List[models.Post])(implicit request: play.api.mvc.RequestHeader)
+
+
+@import tag._
+
+@layout(Messages("area.managePosts")) {
+    <div class="row">
+        <div class="span9">
+            <h4 class="index">@Messages("posts.list")</h4>
+        </div>
+    </div>
+    <div class="row">
+        <div class="span9">
+            <a href="@routes.Management.addPost()" class="btn btn-info pjaxLink">@Messages("posts.add")</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="span9">
+            &nbsp;
+        </div>
+    </div>
+
+
+    @list.map { post =>
+        <div class="row">
+            <div class="span6">
+                <h2>@post.title</h2>
+            </div>
+            <div class="span2">
+                (@post.published.format("dd-MM-yyyy"))
+                <a href="@routes.Management.editPost(post.id)" class="btn btn-success pjaxLink">@Messages("navigation.edit")</a>
+            </div>
+            <div class="span1">
+                @helper.form(action = routes.Management.deletePost(post.id)) {
+                <input type="submit" class="btn btn-danger" value="@Messages("navigation.delete")" />
+                }
+            </div>
+        </div>
+    }
+}

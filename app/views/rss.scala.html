@@ -1,0 +1,22 @@
+@(posts : List[models.Post])(implicit request: play.api.mvc.RequestHeader)<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>Pere Villega's  Blog</title>
+        <link>http://perevillega.com</link>
+        <description>I'm Pere Villega, a software developer from Barcelona currently living in Dublin. I like coding, learning new stuff and creating apps that solve problems for people.</description>
+        <language>en-ie</language>
+        <managingEditor>pere.villega@@gmail.com (Pere Villega)</managingEditor>
+        <atom:link href="@routes.Application.rss().absoluteURL()" rel="self" type="application/rss+xml" />
+
+        @posts.map { post =>
+        <item>
+            <title>@post.title</title>
+            <link>@routes.Application.post(post.id, post.slug, post.published.format("yyyy"), post.published.format("MM"), post.published.format("dd")).absoluteURL()</link>
+            <author>pere.villega@@gmail.com (Pere Villega)</author>
+            <pubDate>@post.published.format("yyyy-MM-dd'T'HH:mm:ss.SSSZ")</pubDate>
+            <guid>@routes.Application.post(post.id, post.slug, post.published.format("yyyy"), post.published.format("MM"), post.published.format("dd")).absoluteURL()</guid>
+            <description><![CDATA[@Html(models.Post.getContentAsHtml(post))]]></description>
+        </item>
+        }
+    </channel>
+</rss>

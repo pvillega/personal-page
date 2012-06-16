@@ -1,0 +1,59 @@
+@(post: models.Post)(implicit request: play.api.mvc.RequestHeader)
+
+@import tag._
+
+@layout(post.title) {
+    <div class="row">
+        <div class="span9">
+            <h4 class="index">@Messages("area.posts")</h4>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="span9">
+            <h1 class="postTitle">@post.title</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="span2">
+            (@post.published.format("dd-MM-yyyy"))
+        </div>
+        <div class="span7">
+            @renderTags(post)
+        </div>
+    </div>
+    <div class="row">
+        <div class="span9 postContent">
+            @markdownShow(post.id.toString, models.Post.getContent(post))
+        </div>
+    </div>
+
+
+    <div class="row hideTiny">
+        <div class="span9">
+            <!-- AddThis Button BEGIN -->
+            <div class="addthis_toolbox addthis_default_style">
+                <a class="addthis_button_twitter"></a>
+                <a class="addthis_button_google_plusone_share"></a>
+                <a class="addthis_button_facebook"></a>
+                <a class="addthis_button_hackernews"></a>
+                <a class="addthis_button_reddit"></a>
+                <a class="addthis_button_linkedin"></a>
+                <a class="addthis_button_dzone"></a>
+                <a class="addthis_button_delicious"></a>
+                <a class="addthis_button_evernote"></a>
+                <a class="addthis_button_instapaper"></a>
+                <a class="addthis_button_pinterest"></a>
+                <a class="addthis_button_email"></a>
+                <a class="addthis_button_compact"></a>
+                <a class="addthis_counter addthis_bubble_style"></a>
+            </div>
+            <script type="text/javascript">var addthis_config = {"data_track_addressbar":true};</script>
+            <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid=pvillega"></script>
+            <!-- AddThis Button END -->
+        </div>
+    </div>
+
+    <!-- Add disques comments -->
+    @disqus(post.id.toString)
+}

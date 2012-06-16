@@ -1,0 +1,115 @@
+@(archived: Map[String, List[models.Link]], unchecked: List[models.Link])(implicit request: play.api.mvc.RequestHeader)
+
+
+@import tag._
+
+@printList(list: List[models.Link]) = {
+    @list.map { d =>
+    <div class="row">
+        <div class="span6">
+            <a href="@d.link">@d.link</a>
+        </div>
+        <div class="span3">
+            (@d.added.format("dd-MM-yyyy"))
+        </div>
+    </div>
+    <div class="row">
+        <div class="span9">
+            <p>@d.comment</p>
+        </div>
+    </div>
+    }
+}
+
+
+@printArchive(arch: Map[String, List[models.Link]]) = {
+<div id="accordionArchive" class="accordion">
+    @arch.map { k =>
+    <div class="accordion-group" name="@k._1">
+        <div class="accordion-heading">
+            <a href="#@k._1" data-parent="#accordionArchive" data-toggle="collapse" class="accordion-toggle archiveCategory">
+                @k._1
+            </a>
+        </div>
+        <div class="accordion-body collapse" id="@k._1" style="height: 0px;">
+            <div class="accordion-inner">
+                @printList(k._2)
+            </div>
+        </div>
+    </div>
+    }
+</div>
+}
+
+@layout(Messages("area.dump")) {
+    <div class="row">
+        <div class="span9">
+            <h4 class="index">@Messages("area.dump")</h4>
+        </div>
+    </div>
+
+    <div class="tabbable">
+        <div class="row">
+            <div class="span9">
+                <ul class="nav nav-pills">
+                    <li class="active">
+                        <a href="#done" data-toggle="tab" class="tabPill">@Messages("dump.checked")</a>
+                    </li>
+                    <li>
+                        <a href="#pending" data-toggle="tab" class="tabPill">@Messages("dump.pending")</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="tab-content">
+
+            <div class="tab-pane active" id="done">
+                <div class="row">
+                    <div class="span9">
+                        <div class="row">
+                            <div class="span9">
+                                <p>@Messages("dump.done.intro")</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="span9">
+                                <strong>@Messages("dump.done.search")</strong>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="span9">
+                                <input type="text" class="span4" data-provide="typeahead" id="searchTags" />
+                                <script type="text/javascript">
+                                    $(function() {
+                                        var values = ['@archived.keys.mkString("','")'];
+                                        tagSearch('searchTags', values);
+                                    });
+                                </script>
+                            </div>
+                        </div>
+
+                        @printArchive(archived)
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-pane" id="pending">
+                <div class="row">
+                    <div class="span9">
+                        <div class="row">
+                            <div class="span9">
+                                <p>@Messages("dump.pending.intro")</p>
+                            </div>
+                        </div>
+
+                        @printList(unchecked)
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+}

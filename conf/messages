@@ -6,44 +6,143 @@ meta.author=Pere Villega
 app.title=Pere Villega
 app.pitch=pitch
 
-# Alerts
-alerts.warning=Warning!
-alerts.success=Ok, done!
-alerts.error=Oh, no!
-alerts.info=Info
+# Assistive
+assistive.main=Main Navigation
+assistive.primary=Skip to primary content
+assistive.secondary=Skip to secondary content
 
 # Sections
 area.home=Home
+area.home.tooltip=Homepage
+area.bio=About
+area.bio.tooltip=Who am I
+area.dump=Repository
+area.dump.tooltip=Thematic storage for relevant links
+area.projects=Projects
+area.projects.tooltip=Stuff I''ve done
+area.posts=Blog
+area.tagged=Posts tagged with ''{0}''
+area.rss=RSS
+area.managePosts=Manage Posts
+area.managePosts.tooltip=Manage your posts
+area.editBio=Edit Bio
+area.editBio.tooltip=Edit the short and full "about me"
+area.manageProjects=Edit projects
+area.manageProjects.tooltip=Manage the Project entries
+area.manageLinks=Manage Repository
+area.manageLinks.tooltip=Manage the Link Dump database
+area.manageQuotes=Manage Quotes
+area.manageQuotes.tooltip=Manage the quotes on the home page
 
 
-# navigation
-navigation.save=Save
-navigation.cancel=Cancel
-navigation.delete=Delete
-navigation.back=Back
-navigation.nothing=No results found
+# Layout sidebar
+sidebar.title=Pere Villega
+sidebar.description=I like coding, learning new stuff and creating apps that solve problems for people.
+sidebar.more=More about me
 
-# Pagination
-pagination.prev=<<
-pagination.next=>>
+# Index
+index.fullBio=More about me
+index.contact=Contact Details
+index.contact.email=Email
+index.contact.social=Social
+index.trivia=Trivia
+index.projects=Stuff I''ve done
+index.projects.more=See all
+index.posts=Posts
+index.posts.more=See All
+index.twitter=Tweets
+
+# About
+bio.edit.short=Short About Me
+bio.edit.full= Full About Me
+bio.edit.saved=About information updated
+
+# Quotes
+quotes.edit=Edit Quotes
+quotes.edit.add=Add Quote
+quotes.edit.remove=Delete
+quotes.edit.quote=Quote
+quotes.edit.saved=Quotes saved
+
+# Posts
+posts.list=All posts
+posts.add=Add new Post
+posts.edit=Edit Post
+posts.tags=Tagged
+posts.noTag= -
+posts.more=Read more >
+posts.older=Older posts >
+posts.newer=< Newer posts
+posts.notFound=No posts found
+posts.edit.title=Title
+posts.edit.content=Content
+posts.edit.tags=Tags
+posts.edit.saved=Post saved
+posts.edit.notFound=Post not found
+posts.delete.ok=Post removed
+
+# Link Dump
+links.list=All links
+links.add=Add new Link
+links.delete.ok=Link deleted
+links.edit=Edit link
+links.edit.notFound=Link not found
+links.edit.saved=Link saved
+links.edit.link=Link
+links.edit.added=Added
+links.edit.comment=Comment
+links.edit.category=Category
+links.edit.archive=Send to Archive
+links.edit.done=Link inspected
+dump.done.intro=This section contains links I''ve deemed worthy of keeping around for future reference in any of the show categories. An archive of URLs.
+dump.done.search=Search categories
+dump.pending.intro=This section contains links I''ve seen around (Twitter, HN, etc) which I want to check in more detail later. It''s my way to avoid distraction by overexposure to information.
+dump.pending=Pending
+dump.checked=Checked
+dump.empty=The archive is empty
+
+# Projects
+projects.list=All projects
+projects.add=Add new Project
+projects.edit=Edit project
+projects.delete.ok=Project deleted
+projects.edit.name=Name
+projects.edit.image=Image
+projects.edit.link=Link
+projects.edit.added=Date
+projects.edit.comment=Comment
+projects.edit.status=Status
+projects.edit.notFound=Project not found
+projects.edit.saved=Project saved
+
+project.intro=This page contains a list of things I''ve done which are publicly available.
+project.added=Added
+project.link=Location
+project.description=Description
+project.status=Status
+
+# Footer
+footer.source=Click to get the source code
+footer.back.top=Back to top
 
 # Error
-error.title=Error detectado
-error.header=Se ha roto
-error.text1=Lo sentimos mucho pero el servidor ha fallado. Hemos sido avisados del problema y lo estamos comprobando.
-error.text2=Mientras lo arreglamos, por favor,
-error.textLink=vuelve a la página principal.
+error.title=D''oh!
+error.text=Some Tumblbeasts jumped from <a href="http://oatmeal.tumblr.com/post/2910950328/dear-tumblr">The Oatmeal</a> to this poor server. Please check the homepage while I hunt them down!
+error.back=< Back to home
 
-notFound.title=Página no encontrada
-notFound.header=URL no encontrada
-notFound.text1=Lo sentimos pero la página que intentabas ver no existe.
-notFound.text2=Parece que era un enlace antiguo o hay un error en la dirección.
-notFound.text5=Puedes usar el formulario adjunto para buscar la página o puedes
-notFound.textLink=volver a la página principal.
+notFound.title=Page Not Found
+notFound.back=< Back to home
 
-
-# Footer Navigation
-back.top=Back to top
-
-# Rich tet
+# Rich text
 richtText.preview=Preview
+
+# Navigation
+navigation.save=Save
+navigation.back=Back
+navigation.edit=Edit
+navigation.delete=Delete
+
+# Other
+format.boolean=is checked?
+
+

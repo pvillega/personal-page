@@ -1,13 +1,26 @@
 //Colors
+@background: #fefefe;
+@fontColor: #444444;
+@secondaryColor: #777777;
+@darkColor: #000;
+
+.siteBackground {
+    background-color: @background;
+}
+
+@linkColor: #8e1d08;
+@linkColorVisited: #550088;
+
+@headers: #666;
+@headersText: #eee;
 
 //Font
 .siteFont {
-    font-family: 'Helvetica Neue','Open Sans',Arial,Helvetica,sans-serif;
-    font-size: 14px;
-}
-
-body, p, div, a, span {
-    .siteFont;
+    font-family: 'Questrial', sans-serif;
+    color: @fontColor;
+    font-size: 15px;
+    line-height: 1.625;
+    font-weight: 400;
 }
 
 //Support
@@ -27,8 +40,9 @@ body, p, div, a, span {
     );
 }
 
+
 .borderRound(@radius) {
-    .border(@radius,@radius,@radius,@radius);
+    .borderRound(@radius,@radius,@radius,@radius);
 }
 
 .borderRound(@radius1, @radius2, @radius3, @radius4) {
@@ -36,19 +50,6 @@ body, p, div, a, span {
     -webkit-border-radius: @radius1 @radius2 @radius3 @radius4;
     border-radius: @radius1 @radius2 @radius3 @radius4;
     behavior: url(ie-css3.htc);
-}
-
-.boxSizing(@type) {
-    -moz-box-sizing: @type;
-    -webkit-box-sizing: @type;
-    box-sizing: @type;
-}
-
-.boxShadow(@h, @v, @blur, @spread: 0, @color){
-  -moz-box-shadow: @h @v @blur @spread @color;
-  -webkit-box-shadow:  @h @v @blur @spread @color;
-  box-shadow:  @h @v @blur @spread @color;
-  behavior: url(ie-css3.htc);
 }
 
 .boxShadowInset(@h, @v, @blur, @spread: 0, @color){
@@ -59,39 +60,405 @@ body, p, div, a, span {
 }
 
 // Styles
+html, body {
+    .siteBackground;
+    color: @fontColor;
+    .siteFont;
+}
+
+footer {
+    margin-top: 75px;
+}
+
+a {
+    color: @linkColor;
+    text-decoration: none;
+    &:hover {
+        color: @linkColor;
+        text-decoration: underline;
+    }
+}
+
+.textLabel {
+    text-align: left;
+    vertical-align: middle;
+    font-size: 20px;
+    padding: 5px 0px;
+}
+
+// Assistive text
+.assistive-text {
+    position: absolute !important;
+    clip: rect(1px 1px 1px 1px); //IE6 IE7
+    clip: rect(1px, 1px, 1px, 1px);
+    &:focus, &:active {
+       .siteBackground;
+       border-bottom: 1px solid #ddd;
+       color: #1982d1;
+       clip: auto !important;
+       font-size: 12px;
+       position: absolute;
+       text-decoration: underline;
+       top: 0;
+       left: 7.6%;
+    }
+}
+
+// Specific styles
+// index page header
+#branding {
+    margin-bottom: 20px;
+    .title {
+        color: @darkColor;
+        text-align: center;
+        a {
+            color: inherit;
+            font-size: 48px;
+        }
+    }
+
+    #tagline {
+        text-align: center;
+        color: @secondaryColor;
+        font-family: 'Crafty Girls', cursive;
+        font-size: 20px;
+        margin: 10px 5px;
+        h5 {
+            font-style: italic;
+        }
+    }
+}
+
+// navigation menu
+nav {
+    text-align: center;
+    a {
+        font-size: 18px;
+        font-weight: bold;
+        color: @linkColor;
+        padding: 0px 6px;
+
+        &:hover {
+            color: @linkColor;
+            text-decoration: underline;
+        }
+
+        &:visited {
+            color: @linkColor;
+        }
+    }
+}
+
+//sidebar elements
+.sidebar {
+    .boxShadowInset(0, 0, 10px, 0, @headers);
+     border: 2px solid @headers;
+     .borderRound(10px);
+     padding: 15px;
+
+    .row {
+        margin-top: 5px;
+    }
+}
+
+// Headers for pages
+.index {
+    .borderRound(10px);
+    background-color: @headers;
+    color: @headersText;
+    font-size: 24px;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+//index page section headers
+h4 {
+    &.projects {
+        margin-top: 35px;
+        margin-bottom: 25px;
+        padding-bottom: 5px;
+        font-size: 24px;
+        border-bottom: 3px solid @headers;
+    }
+    &.indexSection {
+        .index;
+        margin-top: 25px;
+        &.top {
+            margin-top: inherit;
+        }
+    }
+}
+
+//separation between projects
+.indexProjectArea {
+    margin-bottom: 20px;
+    h5 {
+        margin-top: 3px;
+    }
+}
 
 
-// Common, includes sticky footer from  http://www.cssstickyfooter.com/
+//styles for the trivia elements
+.triviaList {
+    padding: 3px 0px;
+    list-style: circle;
+    li {
+        margin-top: 5px;
 
+    }
+}
 
+.tabPillsStyle {
+    .index;
+    font-size: 18px;
+    margin-right: 10px;
+    background-color: @background;
+    color: @fontColor;
 
+    &:hover {
+        background-color: @headersText;
+        color: @secondaryColor;
+    }
+}
 
+// Tab pills style
+.nav-pills {
+    .active {
+        .tabPill {
+            .tabPillsStyle;
+            background-color: @headersText;
+            color: @linkColor;
+        }
+    }
+    .tabPill {
+        .tabPillsStyle;
+    }
+}
 
-/* ===== Primary Styles ====================================================== */
+// Archive
+.archiveCategory {
+    background-color: @headersText;
+}
+
+// Quotes
+.quote_template {
+    display: none;
+}
+
+// Posts
+.postTag {
+    margin: 0px 5px;
+    padding: 3px 5px;
+    color: white;
+    &:hover{
+        color: white;
+    }
+    &:visited {
+        color: white;
+    }
+}
+.postTitle {
+    margin-top: 10px;
+    border-bottom: 1px solid @headers;
+}
+.postContent {
+    margin-top: 5px;
+    margin-bottom: 30px;
+}
+
+//Tweet styles
+.tweet_list {
+    .borderRound(0.5em);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    overflow-y: hidden;
+
+    li {
+        overflow-y: auto;
+        overflow-x: hidden;
+        padding: 0.5em;
+        list-style-type: none;
+    }
+
+    .tweet_avatar {
+        padding-right: .5em;
+        float: left;
+        img {
+            vertical-align: middle;
+        }
+    }
+}
+
+//Markdown editor
+.edit-preview {
+    border: 1px dashed @headers;
+    padding: 5px;
+}
+
+//Error pages
+.error404 {
+    span {
+        display: block;
+        background-image: url("../images/errors/404.png");
+        height: 805px;
+        width: 638px;
+        margin: 0px auto;
+    }
+    a {
+        font-size: 38px;
+    }
+}
+
+.error {
+    span {
+        display: block;
+        background-image: url("../images/errors/fatalmedium.png");
+        height: 384px;
+        width: 600px;
+        margin: 0px auto;
+    }
+    p, a {
+        font-size: 38px;
+    }
+}
+
+// ===== Primary Styles ======================================================
 
 
 // Landscape phones and down
 @media (max-width: 480px) {
 
+    #branding {
+        margin-top: 20px;
+    }
+    h4 {
+        &.indexSection {
+            margin-top: 25px;
+            &.top {
+                margin-top: 25px;
+            }
+        }
+    }
 
+    nav {
+        a{
+            font-size: 14px;
+        }
+    }
+
+    .hideMobile {
+        display: none;
+    }
+
+    .hideTiny {
+        display: none;
+    }
+
+    .error404 {
+        span {
+            background-image: url("../images/errors/404tiny.png");
+            height: 161px;
+            width: 127px;
+        }
+        a {
+                font-size: 25px;
+        }
+    }
+
+    .error {
+        span {
+            background-image: url("../images/errors/fataltiny.png");
+            height: 111px;
+            width: 241px;
+        }
+        p, a {
+                font-size: 25px;
+        }
+    }
 }
 
 // Landscape phone to portrait tablet
 @media (max-width: 768px) {
+    #branding {
+        margin-top: 20px;
+    }
+    h4 {
+        &.indexSection {
+            margin-top: 25px;
+            &.top {
+                margin-top: 25px;
+            }
+        }
+    }
+
+    nav {
+        a{
+            font-size: 14px;
+        }
+    }
+
+    .hideMobile {
+            display: none;
+    }
+
+    .error404 {
+        span {
+            background-image: url("../images/errors/404small.png");
+            height: 241px;
+            width: 191px;
+        }
+        a {
+                font-size: 25px;
+        }
+    }
+
+    .error {
+        span {
+            background-image: url("../images/errors/fataltiny.png");
+            height: 111px;
+            width: 241px;
+        }
+        p, a {
+                font-size: 25px;
+        }
+    }
 
 }
 
 // Portrait tablet to landscape and desktop
-@media (min-width: 768px) and (max-width: 980px) {
+@media (min-width: 768px) and (max-width: 1200px) {
+    .error404 {
+        span {
+            background-image: url("../images/errors/404medium.png");
+            height: 402px;
+            width: 319px;
+        }
+    }
 
+    .error {
+        span {
+            background-image: url("../images/errors/fatalsmall.png");
+            height: 230px;
+            width: 360px;
+        }
+    }
+
+    .sidebar{
+        h2 {
+            padding-right: 20px;
+        }
+        p {
+            word-wrap: break-word;
+            padding-right: 20px;
+        }
+    }
 }
 
 // Large desktop
 @media (min-width: 1200px) {
 
 }
-
-
 
 
 

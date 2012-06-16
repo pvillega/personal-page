@@ -1,0 +1,13 @@
+@(post: models.Post)
+<span class="hideMobile">
+<i class="icon-tags"></i>
+@post.tags.map { list =>
+    @list.map { t =>
+        @if(!t.trim.isEmpty) {
+            <a href="@routes.Application.tagged(t, 0)" class="label label-inverse postTag pjaxLink">@t</a>
+        }
+    }
+}.getOrElse{
+    <span class="postTag">@Messages("posts.noTag")</span>
+}
+</span>

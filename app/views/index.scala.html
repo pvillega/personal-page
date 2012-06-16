@@ -1,9 +1,133 @@
-@()(implicit request: play.api.mvc.RequestHeader)
+@(projects: List[models.Project], posts: List[models.Post], bio: String, quotes: List[models.Quote])(implicit request: play.api.mvc.RequestHeader)
 
-        @* CACHE THE CONTENT?? IT'S STATIC!! *@
+@import tag._
+@import play.api.Play.current
 
-@main(Messages("app.title"), "menuHomeArea") {
+@main(Messages("app.title")) {
+        <header role="banner" id="branding">
+            <h1 class="title">
+                <a href="@routes.Application.index()" class="pjaxLink">@Messages("app.title")</a>
+            </h1>
+            <div id="tagline">
+                <h5>Looking for a nerdy tagline here</h5>
+            </div>
+        </header>
+        <script type="text/javascript">
+            $(function(){
+                var counterTag = 0;
+                function swapHeader() {
+                    var quotes = ['@quotes.mkString("','")'];
+                    var tag = $('#tagline');
+                    tag.html('<h5>'+quotes[counterTag]+'</h5>');
 
+                    counterTag++;
+                    if(counterTag >= quotes.length) counterTag = 0;
+                }
+                window.setInterval(swapHeader, 3000);
+            });
+        </script>
+        @navbar()
 
+        <div class="row">
+            <div class="span6">
+                @* profile *@
+                <div class="row" id="secondary">
+                    <div class="span2">
+                      <img src="@play.api.Play.configuration.getString("avatar.url").getOrElse("")" />
+                    </div>
+                    <div class="span4">
+                        @markdownShow("bio", bio, "font-family: 'Crafty Girls', cursive; font-size: 17px;")
+                        <a href="@routes.Application.fullBio()" class="pjaxLink">@Messages("index.fullBio")</a>
+                    </div>
+                </div>
 
+                @* list of projects *@
+                <div class="row">
+                    <div class="span6">
+                        <h4 class="projects">@Messages("index.projects")</h4>
+                    </div>
+                </div>
+                @projects.map { p =>
+                <div class="row indexProjectArea">
+                    <div class="span1">
+                        <a href="@p.link"><img src="@routes.Assets.at("images/projects/"+p.image)" /></a>
+                    </div>
+                    <div class="span5">
+                        <h3>@p.name</h3>
+                        <p>@markdownShow(p.hashCode.abs.toString, p.comment)</p>
+                        <a href="@p.link">@p.link</a>
+                    </div>
+                </div>
+                }
+                <div class="row">
+                    <div class="span6">
+                        <a href="@routes.Application.projects" class="pjaxLink">@Messages("index.projects.more")</a>
+                    </div>
+                </div>
+
+            </div>
+            @*right column *@
+            <div class="span6">
+
+                @* posts and twitter *@
+                <div class="row">
+                    <div class="span3" id="content">
+                        @* posts *@
+                        <div class="row">
+                            <div class="span3">
+                                <h4 class="indexSection top">@Messages("index.posts")</h4>
+                            </div>
+                        </div>
+                        @posts.map { post =>
+                        <div class="row indexProjectArea">
+                            <div class="span3">
+                                (@post.published.format("dd-MM-yyyy"))
+                                <a href="@routes.Application.post(post.id, post.slug, post.published.format("yyyy"), post.published.format("MM"), post.published.format("dd"))" class="pjaxLink">@post.title &gt;</a>
+                            </div>
+                        </div>
+                        }
+                        <div class="row">
+                            <div class="span3">
+                                <a href="@routes.Application.blog(0)" class="pjaxLink">@Messages("index.posts.more")</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="span3">
+                        @* twitter badge *@
+                        <div class="row">
+                            <div class="span3">
+                                <h4 class="indexSection top">@Messages("index.twitter")</h4>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="span3">
+                                @twitter()
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                @*contact*@
+                <div class="row">
+                    <div class="span6">
+                        <h4 class="indexSection">@Messages("index.contact")</h4>
+                    </div>
+                </div>
+                @contact()
+
+                @*Trivia*@
+                <div class="row">
+                    <div class="span6">
+                        <h4 class="indexSection">@Messages("index.trivia")</h4>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="span6">
+                        @trivia()
+                    </div>
+                </div>
+
+            </div> @* end right column *@
+
+        </div>
 }

@@ -9,17 +9,34 @@ ENTER = 13
 SPACE = 32
 COMMA = 188
 
-#Enables the proper option in the navigation bar menu by reading the id attribute from the header of the section
-root.setNavigationBar = (title, menu) ->
-    $('#menuHomeArea').removeClass('active')
-    $('#menuHowArea').removeClass('active')
-    $('#menuTheatreArea').removeClass('active')
-    $('#menuContactArea').removeClass('active')
-    option = $('#' + menu)
-    if option?
-        option.addClass('active')
-    $('header').attr('id', menu)
-    $('#headerBarText').html(title)
+#Function that enables teh search by tag in ARchive
+# id: id of the element to modify
+# values: array with valid suggestions
+root.tagSearch = (id, values) ->
+    #use bootstrap typeahead element
+    $('#'+id).typeahead source: values
+
+    $('#'+id).attr('autocomplete','off')
+
+    $('#'+id).keydown (event) ->
+        #avoid enter to propagate
+        if event.which is ENTER
+            event.preventDefault()
+
+    $('#'+id).keyup (event) ->
+        #console.log(event.which)
+        #get the type value and hide the non-matching divs
+
+        #clean and trim input
+        typed = $(this).val()
+        typed = typed.trim()
+
+        if typed isnt ""
+            #find all divs which are accordion groups and contain the given string
+            $('.accordion-group').hide()
+            $('.accordion-group[name*="'+typed+'"]').show()
+        else
+            $('.accordion-group').show()
 
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -32,16 +49,16 @@ window.$ = window.$.attachReady(jQuery)
 
 # Enable Pjax on all anchors configured to use it
 # Anchors with class pjaxLink will do Pjax requests
-$('.pjaxLink').pjax('#mainContainer')
+if $.support.pjax
+    $('.pjaxLink').pjax('#mainContent')
 
 # Events to check after ajax load, like social buttons loading
-$('#mainContainer').live 'pjax:end', (e, xhr, err) ->
+$('#mainContent').live 'pjax:end', (e, xhr, err) ->
         log("End pjax event fired")
         #console.log("End pjax event fired - end")
 
-$('#mainContainer').live 'pjax:start', (e, xhr, err) ->
+$('#mainContent').live 'pjax:start', (e, xhr, err) ->
         log("Start pjax event fired")
-
 
 # Prevention of window hijack, run after all jquery scripts
 $('html').css 'display': 'none'

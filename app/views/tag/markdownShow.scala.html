@@ -1,0 +1,18 @@
+@(id: String, value: String, style: String = "")
+
+@**
+    Displays the markdown edited via a rich text editor
+    - id: unique id to identify this element
+    - value: the markdown to render
+    -style: allows for custom styles on the text
+*@
+<pre style="display:none;" id="wmd-input@id">@value</pre>
+@* preview area *@
+<div id="wmd-preview@id" class="wmd-panel wmd-preview" style="@style"></div>
+<script>
+    $(function(){
+        var converter@id = Markdown.getSanitizingConverter();
+        var mkd@id = ( converter@id ).makeHtml($('#wmd-input@id').html());
+        $('#wmd-preview@id').append(mkd@id);
+    });
+</script>

@@ -1,0 +1,28 @@
+@()
+
+<div class="row">
+    <div class="span12">
+        <nav>
+            <div class="row">
+                <div class="span1 hideMobile">&nbsp;</div>
+                <div class="span2"><a href="@routes.Application.index()" class="pjaxLink" rel="tooltip" title="@Messages("area.home.tooltip")">@Messages("area.home")</a></div>
+                <div class="span2"><a href="@routes.Application.fullBio()" class="pjaxLink" rel="tooltip" title="@Messages("area.bio.tooltip")">@Messages("area.bio")</a></div>
+                <div class="span2"><a href="@routes.Application.blog()" class="pjaxLink" rel="tooltip" title="@Messages("area.projects.tooltip")">@Messages("area.posts")</a></div>
+                <div class="span2"><a href="@routes.Application.projects()" class="pjaxLink" rel="tooltip" title="@Messages("area.projects.tooltip")">@Messages("area.projects")</a></div>
+                <div class="span2 hideMobile"><a href="@routes.Application.archive()" class="pjaxLink" rel="tooltip" title="@Messages("area.dump.tooltip")">@Messages("area.dump")</a></div>
+                <div class="span1 hideMobile">&nbsp;</div>
+            </div>
+            @if(play.api.Play.isDev(play.api.Play.current)) {
+            <div class="row hideMobile">
+                <div class="span1">&nbsp;</div>
+                <div class="span2"><a href="@routes.Management.editQuotes()" class="pjaxLink" rel="tooltip" title="@Messages("area.manageQuotes.tooltip")">@Messages("area.manageQuotes")</a></div>
+                <div class="span2"><a href="@routes.Management.editBio()" class="pjaxLink" rel="tooltip" title="@Messages("area.editBio.tooltip")">@Messages("area.editBio")</a></div>
+                <div class="span2"><a href="@routes.Management.listPosts()" class="pjaxLink" rel="tooltip" title="@Messages("area.managePosts.tooltip")">@Messages("area.managePosts")</a></div>
+                <div class="span2"><a href="@routes.Management.listProjects()" class="pjaxLink" rel="tooltip" title="@Messages("area.manageProjects.tooltip")">@Messages("area.manageProjects")</a></div>
+                <div class="span3"><a href="@routes.Management.listLinks()" class="pjaxLink" rel="tooltip" title="@Messages("area.manageLinks.tooltip")">@Messages("area.manageLinks")</a></div>
+            </div>
+            }
+        </nav>
+    </div>
+</div>
+<hr/>

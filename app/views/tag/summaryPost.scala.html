@@ -1,0 +1,25 @@
+@(post: models.Post)
+
+<div class="row">
+    <div class="span9">
+        <h1 class="postTitle">@post.title</h1>
+    </div>
+</div>
+<div class="row">
+    <div class="span2">
+        (@post.published.format("dd-MM-yyyy"))
+    </div>
+    <div class="span7">
+       @renderTags(post)
+    </div>
+</div>
+<div class="row">
+    <div class="span9 postContent">
+        @markdownShow(post.id.toString, post.summary)
+    </div>
+</div>
+<div class="row">
+    <div class="span9">
+        <a href="@routes.Application.post(post.id, post.slug, post.published.format("yyyy"), post.published.format("MM"), post.published.format("dd"))" class="pjaxLink">@Messages("posts.more")</a>
+    </div>
+</div>
