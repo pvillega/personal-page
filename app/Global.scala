@@ -30,6 +30,7 @@ object Global extends GlobalSettings {
   override def onStart(app: Application) {
     Logger.info("onStart executed for application %s".format(app.mode))
     super.onStart(app)
+    Logger.info("onStart - value fo Application.cacheStorage [%d]".format(Application.cacheStorage))
     Logger.info("onStart - forcing items to go into cache")
     Bio.init()
     Link.init()

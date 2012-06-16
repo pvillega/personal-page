@@ -14,7 +14,7 @@ object Application extends Controller {
   val errorReportingMail = Play.configuration.getString("mail.onError").getOrElse("")
 
   //Value used by caches when storing data, to facilitate working in dev environment (override in production)
-  val cacheStorage = Play.configuration.getInt("memcached.time").getOrElse(1)
+  val cacheStorage = Play.configuration.getInt("memcached.time").getOrElse(315360000)
 
   /**
    * Shows the main page of the application
