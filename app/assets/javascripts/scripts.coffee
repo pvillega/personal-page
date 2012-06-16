@@ -49,8 +49,8 @@ window.$ = window.$.attachReady(jQuery)
 
 # Enable Pjax on all anchors configured to use it
 # Anchors with class pjaxLink will do Pjax requests
-if $.support.pjax
-    $('.pjaxLink').pjax('#mainContent')
+# if $.support.pjax
+#    $('.pjaxLink').pjax('#mainContent')
 
 # Events to check after ajax load, like social buttons loading
 $('#mainContent').live 'pjax:end', (e, xhr, err) ->
