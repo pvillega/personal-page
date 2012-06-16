@@ -16,14 +16,14 @@
             $(function(){
                 var counterTag = 0;
                 function swapHeader() {
-                    var quotes = ['@quotes.mkString("','")'];
+                    var quotes = @Html(quotes.mkString("[\"", "\",\"","\"]"));
                     var tag = $('#tagline');
-                    tag.html('<h5>'+quotes[counterTag]+'</h5>');
+                    tag.html('<h4>'+quotes[counterTag]+'</h4>');
 
                     counterTag++;
                     if(counterTag >= quotes.length) counterTag = 0;
                 }
-                window.setInterval(swapHeader, 3000);
+                window.setInterval(swapHeader, 10000);
             });
         </script>
         @navbar()
