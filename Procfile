@@ -1,3 +1,3 @@
-web: target/start -Dhttp.port=${PORT} ${JAVA_OPTS} ${MYCONFIG} -Dmemcached.time=315360000
+web: target/start -Dhttp.port=${PORT} -Dmemcached.time=315360000 ${JAVA_OPTS} ${MYCONFIG}
 
 
