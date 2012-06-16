@@ -115,7 +115,7 @@ projects.edit.status=Status
 projects.edit.notFound=Project not found
 projects.edit.saved=Project saved
 
-project.intro=This page contains a list of things I''ve done which are publicly available.
+project.intro=This page contains a list of things I''ve done which are publicly available. Check my <a href="https://github.com/pvillega" rel="tooltip" title="Github">Github</a> profile for more!
 project.added=Added
 project.link=Location
 project.description=Description
