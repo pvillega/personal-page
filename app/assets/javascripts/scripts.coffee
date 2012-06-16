@@ -55,6 +55,10 @@ if $.support.pjax
 # Events to check after ajax load, like social buttons loading
 $('#mainContent').live 'pjax:end', (e, xhr, err) ->
         log("End pjax event fired")
+        # Reinitialize AddThis if it's inside the loaded fragment
+        if window.addthis
+            addthis.toolbox $(".addthis_toolbox").get(0)
+            addthis.counter $(".addthis_counter").get(0)
         #console.log("End pjax event fired - end")
 
 $('#mainContent').live 'pjax:start', (e, xhr, err) ->
