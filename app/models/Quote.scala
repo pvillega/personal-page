@@ -23,7 +23,7 @@ case class QuoteForm(list: List[String])
 
 object Quote {
 
-  private val quoteKey = "quotes"
+  private val quoteKey = "qs"
 
   /**
    * Initializes the cached structures for the application
