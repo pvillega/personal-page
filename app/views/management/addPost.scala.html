@@ -22,6 +22,12 @@
         )
 
         @inputText(
+            postForm("date"),
+            '_label -> Messages("posts.edit.date"),
+            '_error -> postForm.globalError
+        )
+
+        @inputText(
         postForm("tags"),
         '_label -> Messages("posts.edit.tags"),
         '_error -> postForm.globalError

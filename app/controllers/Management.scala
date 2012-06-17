@@ -57,6 +57,7 @@ object Management extends Controller with AccessControl {
   val postForm: Form[PostText] = Form(
     mapping(
       "title" -> nonEmptyText,
+      "date" -> optional(date),
       "content" -> nonEmptyText,
       "tags" -> nonEmptyText
     )(PostText.apply)(PostText.unapply)
@@ -123,7 +124,7 @@ object Management extends Controller with AccessControl {
       Logger.info("Management.editPost accessed for post[%d]".format(id))
       Post.getById(id) match {
         case Some(post) => {
-          val postText = new PostText(title = post.title, content = Post.getContent(post), tags = post.tags.getOrElse(Array()).toList.mkString(","))
+          val postText = new PostText(title = post.title, date = None, content = Post.getContent(post), tags = post.tags.getOrElse(Array()).toList.mkString(","))
           Ok(views.html.management.editPost(id, postForm.fill(postText)))
         }
         case _ => {

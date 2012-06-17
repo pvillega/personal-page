@@ -13,6 +13,11 @@
            @summaryPost(post)
     }
     <div class="row">
+        <div class="span9">
+            &nbsp;
+        </div>
+    </div>
+    <div class="row">
         <div class="span2">
            @if(previous){ <a href="@routes.Application.blog(page - 1)" class="pjaxLink">@Messages("posts.newer")</a> } else { &nbsp; }
         </div>

@@ -76,6 +76,7 @@ posts.newer=< Newer posts
 posts.notFound=No posts found
 posts.edit.title=Title
 posts.edit.content=Content
+posts.edit.date=Date
 posts.edit.tags=Tags
 posts.edit.saved=Post saved
 posts.edit.notFound=Post not found

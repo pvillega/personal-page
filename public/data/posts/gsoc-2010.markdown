@@ -1,0 +1,22 @@
+During this time I did not update the blog, I was finishing my [GSOC 2010 project](https://wiki.duraspace.org/display/GSOC/GSOC10+-+Add+Unit+Testing+to+Dspace). You can find more technical details [here](https://wiki.duraspace.org/display/GSOC/GSOC+2010+Unit+Tests+-+Technical+documentation).  
+
+So, how's been the project? I think this will sum it up:
+
+[http://expertvoices.nsdl.org/duraspace/2010/10/05/testing-times-this-summer/](http://expertvoices.nsdl.org/duraspace/2010/10/05/testing-times-this-summer/)
+
+Yeah, it feels good to see things like this with your name in hehe. Personally it has been a great experience that I recommend to every developer around. It's not easy to get in, and it may feel more appealing to stay at home being lazy (or playing Starcraft II) than coding, but it is worth it, I mean it. 
+
+By the way, what's GSOC? GSOC stands for Google Summer of Code. To those who don't know how it works, the process is simple: open-source organizations apply to be part of the program. Once selected, students (you need to be a student, although not necessarily in an IT-related branch) propose projects for the accepted organizations. Then Google accepts some projects into GSOC. And you start coding :)
+
+Why should you join? Well, for starters you are helping an open source project. No, it's not a matter of being a FOSS fanatic or anything. The projects accepted by Google are relevant projects, used by many many people. For example the project I chose, [DSpace][4], is used by many universities around the world to make their research available in internet. 
+
+If that doesn't convince you, maybe you think about the learning experience. Working in an open source project is very different than your day-to-day job at a company as developer, and you will learn from it. You will also improve your technical skills, as you have a mentor that helps you suggesting ways to proceed and/or to improve some pieces of code.
+
+Not convinced yet? It does look good on your CV.
+
+Not even so? Well, they pay you a few thousand bucks.
+
+So get your lazy ass ready for next GSOC! See you in GSOC 2011, hopefully!
+
+
+  [4]: http://www.dspace.org/

@@ -31,9 +31,9 @@ case class Post(id: Int, title: String, published: Date, tags: Option[Array[Stri
 
   lazy val summary = {
     val content = Post.getContent(this)
-    val pos = if (content.size < 250) { content.size
+    val pos = if (content.size < 500) { content.size
     } else {
-      val x = content.indexOf(".", 250)
+      val x = content.indexOf(".", 500)
       if (x == -1) { content.size } else { x + 1 }
     }
     content.substring(0, pos)
@@ -43,10 +43,11 @@ case class Post(id: Int, title: String, published: Date, tags: Option[Array[Stri
 /**
  * Used to store the contents of a new post
  * @param title the title of the post, also used as filename
+ * @param date the publication date of the post
  * @param content the markdown content to store
  * @param tags list of tags, comma separated
  */
-case class PostText(title: String, content: String, tags: String)
+case class PostText(title: String, date: Option[Date], content: String, tags: String)
 
 object Post {
 
@@ -217,7 +218,7 @@ object Post {
     MarkdownSupport.saveMarkdown(pathToPosts + filename, post.content)
     Logger.debug("Post.save - markdown saved, now creating new entry in json file")
     val nextId = if (all().isEmpty) { 0 } else { all().maxBy(_.id).id }
-    val newPost = Post(id = nextId + 1, published= new Date(), title = post.title, file = filename, tags = Some(post.tags.split(",").map( t => t.trim)))
+    val newPost = Post(id = nextId + 1, published = post.date.getOrElse(new Date()), title = post.title, file = filename, tags = Some(post.tags.split(",").map( t => t.trim)))
     Logger.debug("Post.save - saving post[%s]".format(newPost))
     val newList = newPost :: all()
     JsonSupport.updatePosts(newList)
@@ -248,7 +249,7 @@ object Post {
     Logger.info("Post.update - update post[%d]".format(id))
     val post = getById(id).get
 
-    val filename = URLSupport.slugify(post.file) + ".markdown"
+    val filename = post.file
     Logger.info("Post.update - saving content of post into file [%s]".format(filename))
     MarkdownSupport.saveMarkdown(pathToPosts + filename, postText.content)
 
