@@ -35,8 +35,8 @@ object Global extends GlobalSettings {
     Logger.info("onStart - value fo Application.cacheStorage [%d]".format(Application.cacheStorage))
     Logger.info("onStart - cleaning some caches")
     //TODO: once api is updated in 2.1, modify the cache cleaning
-    play.api.Play.current.plugin[MemcachedPlugin].get.api.remove(Application.rssKey)
-    play.api.Play.current.plugin[MemcachedPlugin].get.api.remove(Application.sitemapKey)
+//    play.api.Play.current.plugin[MemcachedPlugin].get.api.remove(Application.rssKey)
+//    play.api.Play.current.plugin[MemcachedPlugin].get.api.remove(Application.sitemapKey)
     Logger.info("onStart - forcing items to go into cache")
     Bio.init()
     Link.init()

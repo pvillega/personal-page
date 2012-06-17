@@ -29,7 +29,7 @@ object Quote {
    * Initializes the cached structures for the application
    */
   def init() = {
-    play.api.Play.current.plugin[MemcachedPlugin].get.api.remove(quoteKey)
+   // play.api.Play.current.plugin[MemcachedPlugin].get.api.remove(quoteKey)
     all()
   }
 

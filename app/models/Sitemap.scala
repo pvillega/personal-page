@@ -27,7 +27,7 @@ object Sitemap {
    * Clears the sitemap from the cache
    */
   def init () {
-    play.api.Play.current.plugin[MemcachedPlugin].get.api.remove(sitemapKey)
+//    play.api.Play.current.plugin[MemcachedPlugin].get.api.remove(sitemapKey)
   }
 
   /**

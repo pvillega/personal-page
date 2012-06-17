@@ -31,8 +31,8 @@ object Bio {
    */
   def init() = {
     //force a refresh on the cache
-    play.api.Play.current.plugin[MemcachedPlugin].get.api.remove(shortKey)
-    play.api.Play.current.plugin[MemcachedPlugin].get.api.remove(fullKey)
+//    play.api.Play.current.plugin[MemcachedPlugin].get.api.remove(shortKey)
+//    play.api.Play.current.plugin[MemcachedPlugin].get.api.remove(fullKey)
     getBio()
     getFullBio()
   }

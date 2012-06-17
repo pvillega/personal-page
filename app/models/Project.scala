@@ -38,8 +38,8 @@ object Project {
    * Initializes the cached structures for the application
    */
   def init() = {
-    play.api.Play.current.plugin[MemcachedPlugin].get.api.remove(allKey)
-    play.api.Play.current.plugin[MemcachedPlugin].get.api.remove(homeKey)
+//    play.api.Play.current.plugin[MemcachedPlugin].get.api.remove(allKey)
+//    play.api.Play.current.plugin[MemcachedPlugin].get.api.remove(homeKey)
     all()
     homeList()
   }

@@ -39,9 +39,9 @@ object Link {
    * Initializes the cached structures for the application
    */
   def init() = {
-    play.api.Play.current.plugin[MemcachedPlugin].get.api.remove(allKey)
-    play.api.Play.current.plugin[MemcachedPlugin].get.api.remove(archivedKey)
-    play.api.Play.current.plugin[MemcachedPlugin].get.api.remove(uncheckedKey)
+//    play.api.Play.current.plugin[MemcachedPlugin].get.api.remove(allKey)
+//    play.api.Play.current.plugin[MemcachedPlugin].get.api.remove(archivedKey)
+//    play.api.Play.current.plugin[MemcachedPlugin].get.api.remove(uncheckedKey)
     all()
   }
 
