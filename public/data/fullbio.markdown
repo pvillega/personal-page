@@ -32,7 +32,7 @@ I solve problems using software. Technically I'm a software developer, but I don
 
 I deliver. I pride myself of delivering working solutions on time. There's been failures here and there, specially years ago when I was learning and I overcommitted, but I'm driven by result: if something can't be delivered on time I have failed. I didn't do my job. And I hate that feeling. So, I focus and I deliver.
 
-I improve things. It may be a bit of an obession of mine, but I like clean code and structures. And I like automation that reduces repetitive work (which I dislike). Granted, sometimes my code is not great (and I thank code reviews for their existence). But once I see an issue I'll go the extra mile to solve it, either via automation of a task or by refactoring that fragment. 
+I improve things. It may be a bit of an obsession of mine, but I like clean code and structures. And I like automation that reduces repetitive work (which I dislike). Granted, sometimes my code is not great (and I thank code reviews for their existence). But once I see an issue I'll go the extra mile to solve it, either via automation of a task or by refactoring that fragment.
 
 I code. Currently in Scala and Java and using Play Framework for HTML 5 apps. But it may change. Clojure? Node.js? Who knows. The down side is that with so many interesting things around in the software world choosing is hard.
 
