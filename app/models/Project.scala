@@ -4,7 +4,6 @@ import java.util.Date
 import play.api.Logger
 import play.api.cache.Cache
 import play.api.Play.current
-import com.github.mumoshu.play2.memcached.MemcachedPlugin
 
 /**
  * Stores an element to check later
@@ -38,8 +37,6 @@ object Project {
    * Initializes the cached structures for the application
    */
   def init() = {
-//    play.api.Play.current.plugin[MemcachedPlugin].get.api.remove(allKey)
-//    play.api.Play.current.plugin[MemcachedPlugin].get.api.remove(homeKey)
     all()
     homeList()
   }

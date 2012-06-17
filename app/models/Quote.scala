@@ -3,7 +3,6 @@ package models
 import play.api.Logger
 import play.api.cache.Cache
 import play.api.Play.current
-import com.github.mumoshu.play2.memcached.MemcachedPlugin
 
 /**
  * Created with IntelliJ IDEA.
@@ -29,7 +28,6 @@ object Quote {
    * Initializes the cached structures for the application
    */
   def init() = {
-   // play.api.Play.current.plugin[MemcachedPlugin].get.api.remove(quoteKey)
     all()
   }
 

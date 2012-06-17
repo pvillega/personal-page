@@ -3,7 +3,6 @@ package models
 import play.api.Logger
 import play.api.cache.Cache
 import play.api.Play.current
-import com.github.mumoshu.play2.memcached.MemcachedPlugin
 
 /**
  * Stores the contents of the Bio markdown files
@@ -30,9 +29,6 @@ object Bio {
    * Initializes the cached structures for the application
    */
   def init() = {
-    //force a refresh on the cache
-//    play.api.Play.current.plugin[MemcachedPlugin].get.api.remove(shortKey)
-//    play.api.Play.current.plugin[MemcachedPlugin].get.api.remove(fullKey)
     getBio()
     getFullBio()
   }

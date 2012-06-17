@@ -15,7 +15,6 @@ This application uses:
 + Bootstrap 2.0.4
 + JQuery 1.7.1
 + [Mail plugin][1]
-+ [Memcache plugin][2]
 + [Pjax][9]
 + [Tweet][10]
 + Other components I may have forgotten to mention
@@ -107,7 +106,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 
 [1]: https://github.com/typesafehub/play-plugins/tree/master/mailer
-[2]: https://github.com/mumoshu/play2-memcached
 [3]: http://nesbot.com/2011/11/22/now-running-on-play-2-beta
 [4]: https://github.com/briannesbitt/nesbot.com
 [5]: http://erjjones.github.com/blog/How-I-built-my-blog-in-one-day/

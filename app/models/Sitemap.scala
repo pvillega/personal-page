@@ -1,11 +1,9 @@
 package models
 
-import java.util.Date
 import play.api.Logger
 import play.api.cache.Cache
 import play.api.Play.current
 import play.api.mvc.{Request, AnyContent}
-import com.github.mumoshu.play2.memcached.MemcachedPlugin
 
 /**
  * Stores information on a link for a sitemap
@@ -24,10 +22,9 @@ object Sitemap {
   private val sitemapKey = "sitemapXML"
 
   /**
-   * Clears the sitemap from the cache
+   * Inits the sitemap
    */
   def init () {
-//    play.api.Play.current.plugin[MemcachedPlugin].get.api.remove(sitemapKey)
   }
 
   /**
