@@ -4,6 +4,7 @@ import java.util.Date
 import play.api.Logger
 import play.api.cache.Cache
 import play.api.Play.current
+import com.github.mumoshu.play2.memcached.MemcachedPlugin
 
 /**
  * Stores an element to check later
@@ -30,12 +31,15 @@ case class Project(id: Int, name: String, image: String, link: String, added: Da
 
 object Project {
 
-
+  private val allKey = "projects"
+  private val homeKey = "projectsHome"
 
   /**
    * Initializes the cached structures for the application
    */
   def init() = {
+    play.api.Play.current.plugin[MemcachedPlugin].get.api.remove(allKey)
+    play.api.Play.current.plugin[MemcachedPlugin].get.api.remove(homeKey)
     all()
     homeList()
   }
@@ -47,7 +51,7 @@ object Project {
     import JsonSupport._
 
     Logger.info("Project.all - Loading Projects data")
-    Cache.getOrElse("projects", controllers.Application.cacheStorage){
+    Cache.getOrElse(allKey, controllers.Application.cacheStorage){
       Logger.info("Project.all - Project data not in cache, loading from file")
       val list = loadProjects()
 
@@ -60,7 +64,7 @@ object Project {
    */
   def homeList() = {
     Logger.info("Project.homeList - Loading Home Projects data")
-    Cache.getOrElse("projectsHome", controllers.Application.cacheStorage){
+    Cache.getOrElse(homeKey, controllers.Application.cacheStorage){
       Logger.info("Project.homeList - Projects Home data not in cache, loading from file")
       val list = all()
       list.take(5)

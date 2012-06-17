@@ -4,6 +4,7 @@ import java.util.Date
 import play.api.cache.Cache
 import play.api.Logger
 import play.api.Play.current
+import com.github.mumoshu.play2.memcached.MemcachedPlugin
 
 /**
  * Stores an element to check later
@@ -52,14 +53,21 @@ case class PostText(title: String, date: Option[Date], content: String, tags: St
 object Post {
 
   val pageSize = 10
-  val pathToPosts = "public/data/posts/"
+  private val pathToPosts = "public/data/posts/"
+
+  private val allKey = "loadPosts"
+  private val mapKey = "mapPosts"
+  private val tagKey = "tagMapPosts"
+  private val homeKey = "postHome"
+  private val pageKey = "allPt"
+  private val tagPageKey = "tgPt"
 
   /**
    * Loads all posts from disk
    */
   def all() = {
     import JsonSupport._
-    Cache.getOrElse("loadPosts", controllers.Application.cacheStorage){
+    Cache.getOrElse(allKey, controllers.Application.cacheStorage){
       Logger.info("Post.loadPost - Posts data not in cache, loading from file")
       val list = loadPosts
 
@@ -71,17 +79,32 @@ object Post {
    * Initializes the cached structures for the application
    */
   def init() = {
+    play.api.Play.current.plugin[MemcachedPlugin].get.api.remove(allKey)
+    play.api.Play.current.plugin[MemcachedPlugin].get.api.remove(mapKey)
+    play.api.Play.current.plugin[MemcachedPlugin].get.api.remove(tagKey)
+    play.api.Play.current.plugin[MemcachedPlugin].get.api.remove(homeKey)
+
     all()
     postsMap()
     tagMap()
     homeList()
+
+    for (i <- 0 to 1000){
+      play.api.Play.current.plugin[MemcachedPlugin].get.api.remove(pageKey+i)
+    }
+
+    tagMap().keys.map { k =>
+      for (i <- 0 to 1000){
+        play.api.Play.current.plugin[MemcachedPlugin].get.api.remove(tagPageKey + i + k)
+      }
+    }
   }
 
   /**
    * Stores all the posts referenced by id
    */
   def postsMap() = {
-    Cache.getOrElse("mapPosts", controllers.Application.cacheStorage) {
+    Cache.getOrElse(mapKey, controllers.Application.cacheStorage) {
       Logger.info("Post.postsMap - data not in cache, loading from file")
       val list = all()
       var map = Map.empty[Int, Post]
@@ -97,7 +120,7 @@ object Post {
    * Stores all the posts referenced by tag
    */
   def tagMap() = {
-    Cache.getOrElse("tagMapPosts", controllers.Application.cacheStorage) {
+    Cache.getOrElse(tagKey, controllers.Application.cacheStorage) {
       Logger.info("Post.postsMap - data not in cache, loading from file")
       val list = all()
       var map = Map.empty[String, List[Post]]
@@ -119,7 +142,7 @@ object Post {
    */
   def homeList() = {
     Logger.info("Post.homeList - Loading Home Posts data")
-    Cache.getOrElse("postHome", controllers.Application.cacheStorage){
+    Cache.getOrElse(homeKey, controllers.Application.cacheStorage){
       Logger.info("Post.homeList - Posts Home data not in cache, loading from file")
       val list = all()
       list.take(10)
@@ -148,7 +171,7 @@ object Post {
    */
   def page(page: Int) = {
     Logger.info("Post.all - retrieving all posts for page [%d]".format(page))
-    Cache.getOrElse("allPt" + page, controllers.Application.cacheStorage) {
+    Cache.getOrElse(pageKey + page, controllers.Application.cacheStorage) {
       Logger.info("Post.all - all posts for page [%d] not in cache".format(page))
       val list = all()
       val start = if (page*pageSize < list.size) { page*pageSize } else { list.size - 1 }
@@ -170,7 +193,7 @@ object Post {
    */
   def tagged(tag: String, page: Int) = {
     Logger.info("Post.tagged - retrieving all posts for page[%d] tag[%s]".format(page, tag))
-    Cache.getOrElse("tgPt" + page + tag, controllers.Application.cacheStorage) {
+    Cache.getOrElse(tagPageKey + page + tag, controllers.Application.cacheStorage) {
       Logger.info("Post.tagged - all posts for page[%d] tag[%s] not in cache".format(page, tag))
       val list = tagMap.getOrElse(tag, Nil)
       val start = if (page*pageSize < list.size) { page*pageSize } else { list.size - 1 }

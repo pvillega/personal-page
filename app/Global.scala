@@ -6,9 +6,11 @@
  * Global settings class
  */
 
+import com.github.mumoshu.play2.memcached.MemcachedPlugin
 import controllers.Application
 import models._
 import play.api._
+import cache.Cache
 import mvc._
 import play.api.mvc.Results._
 import play.api.Play.current
@@ -31,12 +33,17 @@ object Global extends GlobalSettings {
     Logger.info("onStart executed for application %s".format(app.mode))
     super.onStart(app)
     Logger.info("onStart - value fo Application.cacheStorage [%d]".format(Application.cacheStorage))
+    Logger.info("onStart - cleaning some caches")
+    //TODO: once api is updated in 2.1, modify the cache cleaning
+    play.api.Play.current.plugin[MemcachedPlugin].get.api.remove(Application.rssKey)
+    play.api.Play.current.plugin[MemcachedPlugin].get.api.remove(Application.sitemapKey)
     Logger.info("onStart - forcing items to go into cache")
     Bio.init()
     Link.init()
     Project.init()
     Post.init()
     Quote.init()
+    Sitemap.init()
   }
 
   /**

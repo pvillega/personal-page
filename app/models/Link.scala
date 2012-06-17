@@ -4,6 +4,7 @@ import play.api.Play.current
 import play.api.Logger
 import java.util.Date
 import play.api.cache.Cache
+import com.github.mumoshu.play2.memcached.MemcachedPlugin
 
 /**
  * Stores an element to check later
@@ -30,10 +31,17 @@ case class Link(id: Int, link: String, added: Date, comment: String, done: Boole
 
 object Link {
 
+  private val allKey = "dumpData"
+  private val archivedKey = "dumpArchived"
+  private val uncheckedKey = "dumpUnckd"
+
   /**
    * Initializes the cached structures for the application
    */
   def init() = {
+    play.api.Play.current.plugin[MemcachedPlugin].get.api.remove(allKey)
+    play.api.Play.current.plugin[MemcachedPlugin].get.api.remove(archivedKey)
+    play.api.Play.current.plugin[MemcachedPlugin].get.api.remove(uncheckedKey)
     all()
   }
 
@@ -44,7 +52,7 @@ object Link {
     import JsonSupport._
 
     Logger.info("Link.all - Loading Link data")
-    Cache.getOrElse("dumpData", controllers.Application.cacheStorage){
+    Cache.getOrElse(allKey, controllers.Application.cacheStorage){
       Logger.info("Link.all - Link data not in cache, loading from file")
       val list = loadLinks
 
@@ -58,7 +66,7 @@ object Link {
    */
   def getArchivedLinks() = {
     Logger.info("Link.getArchivedLinks - Loading Links with the archive flag enabled")
-      Cache.getOrElse("dumpArchived", controllers.Application.cacheStorage){
+      Cache.getOrElse(archivedKey, controllers.Application.cacheStorage){
       all().filter(_.archive).groupBy(_.category)
     }
   }
@@ -69,7 +77,7 @@ object Link {
    */
   def getAllUnchecked() = {
     Logger.info("Link.getAllUnchecked - Loading all unchecked links")
-    Cache.getOrElse("dumpUnckd", controllers.Application.cacheStorage){
+    Cache.getOrElse(uncheckedKey, controllers.Application.cacheStorage){
       all().filterNot(_.done)
     }
   }

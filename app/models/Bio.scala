@@ -3,6 +3,7 @@ package models
 import play.api.Logger
 import play.api.cache.Cache
 import play.api.Play.current
+import com.github.mumoshu.play2.memcached.MemcachedPlugin
 
 /**
  * Stores the contents of the Bio markdown files
@@ -22,10 +23,16 @@ object Bio {
   val shortBio = "public/data/whoami.markdown"
   val fullBio = "public/data/fullbio.markdown"
 
+  private val shortKey = "shortBio"
+  private val fullKey = "fullBio"
+
   /**
    * Initializes the cached structures for the application
    */
   def init() = {
+    //force a refresh on the cache
+    play.api.Play.current.plugin[MemcachedPlugin].get.api.remove(shortKey)
+    play.api.Play.current.plugin[MemcachedPlugin].get.api.remove(fullKey)
     getBio()
     getFullBio()
   }
@@ -33,7 +40,7 @@ object Bio {
 
   def getBio() = {
     Logger.info("Bio.getBio - Loading Bio")
-    Cache.getOrElse("shortBio", controllers.Application.cacheStorage){
+    Cache.getOrElse(shortKey, controllers.Application.cacheStorage){
       Logger.info("Bio.getBio - Bio data not in cache, loading from file")
       MarkdownSupport.loadMarkdown(shortBio)
     }
@@ -41,7 +48,7 @@ object Bio {
 
   def getFullBio() = {
     Logger.info("Bio.getFullBio - Loading Bio")
-    Cache.getOrElse("fullBio", controllers.Application.cacheStorage){
+    Cache.getOrElse(fullKey, controllers.Application.cacheStorage){
       Logger.info("Bio.getFullBio - Bio data not in cache, loading from file")
       MarkdownSupport.loadMarkdown(fullBio)
     }

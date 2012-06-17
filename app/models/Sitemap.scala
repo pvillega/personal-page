@@ -5,6 +5,7 @@ import play.api.Logger
 import play.api.cache.Cache
 import play.api.Play.current
 import play.api.mvc.{Request, AnyContent}
+import com.github.mumoshu.play2.memcached.MemcachedPlugin
 
 /**
  * Stores information on a link for a sitemap
@@ -16,16 +17,25 @@ case class Sitemap(url: String, changeFreq : String = "Monthly", priority: Strin
 
 object Sitemap {
 
-  val year = new java.text.SimpleDateFormat("yyyy")
-  val month = new java.text.SimpleDateFormat("MM")
-  val day = new java.text.SimpleDateFormat("dd")
+  private val year = new java.text.SimpleDateFormat("yyyy")
+  private val month = new java.text.SimpleDateFormat("MM")
+  private val day = new java.text.SimpleDateFormat("dd")
+
+  private val sitemapKey = "sitemapXML"
+
+  /**
+   * Clears the sitemap from the cache
+   */
+  def init () {
+    play.api.Play.current.plugin[MemcachedPlugin].get.api.remove(sitemapKey)
+  }
 
   /**
    * Returns a list of Sitemap with all the info relevant to the system
    */
   def generateSitemap()(implicit request: Request[AnyContent]) = {
     Logger.info("Sitemap.generateSitemap - Loading sitemap")
-    Cache.getOrElse("sitemapXML", controllers.Application.cacheStorage){
+    Cache.getOrElse(sitemapKey, controllers.Application.cacheStorage){
       Logger.info("Sitemap.generateSitemap - sitemap data not in cache, generating")
 
       var list : List[Sitemap] = Nil

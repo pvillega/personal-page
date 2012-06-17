@@ -3,6 +3,7 @@ package models
 import play.api.Logger
 import play.api.cache.Cache
 import play.api.Play.current
+import com.github.mumoshu.play2.memcached.MemcachedPlugin
 
 /**
  * Created with IntelliJ IDEA.
@@ -22,10 +23,13 @@ case class QuoteForm(list: List[String])
 
 object Quote {
 
+  private val quoteKey = "quotes"
+
   /**
    * Initializes the cached structures for the application
    */
   def init() = {
+    play.api.Play.current.plugin[MemcachedPlugin].get.api.remove(quoteKey)
     all()
   }
 
@@ -36,7 +40,7 @@ object Quote {
     import JsonSupport._
 
     Logger.info("Quote.all - Loading Quote data")
-    Cache.getOrElse("quotes", controllers.Application.cacheStorage){
+    Cache.getOrElse(quoteKey, controllers.Application.cacheStorage){
       Logger.info("Quote.all - Quote data not in cache, loading from file")
       scala.util.Random.shuffle(loadQuotes)
     }

@@ -13,8 +13,11 @@ object Application extends Controller {
   //Admin mail to be made available across app
   val errorReportingMail = Play.configuration.getString("mail.onError").getOrElse("")
 
-  //Value used by caches when storing data, to facilitate working in dev environment (override in production)
-  val cacheStorage = Play.configuration.getInt("memcached.time").getOrElse(60000)
+  //Value used by caches when storing data, to facilitate working in dev environment (in production with no config it defaults to 24h)
+  val cacheStorage = Play.configuration.getInt("memcached.time").getOrElse(86400)
+
+  val rssKey = "rss"
+  val sitemapKey = "sitemap"
 
   /**
    * Shows the main page of the application
@@ -119,7 +122,7 @@ object Application extends Controller {
   def rss() = Action {
     implicit request =>
       Logger.info("Application.rss accessed")
-      val render = Cache.getOrElse("rss", cacheStorage) {
+      val render = Cache.getOrElse(rssKey, cacheStorage) {
         Logger.info("Application.rss")
         val posts = Post.all()
         Logger.debug("Application.rss - posts to show [%s]".format(posts))
@@ -134,7 +137,7 @@ object Application extends Controller {
   def sitemap() = Action {
     implicit request =>
       Logger.info("Application.sitemap accessed")
-      val render = Cache.getOrElse("sitemap", cacheStorage) {
+      val render = Cache.getOrElse(sitemapKey, cacheStorage) {
         Logger.info("Application.sitemap")
         val sitemaps = Sitemap.generateSitemap()
         Logger.debug("Application.sitemap - list to show [%s]".format(sitemaps))
