@@ -74,7 +74,7 @@ See my own page at <http://www.perevillega.com>
 
 ## Credit to
 
-Brian Nesbitt for his inspiration with his [Play 2.0 Beta blog system][3] ([source code][4])
+Brian Nesbitt for his [Play 2.0 Beta blog system][3] ([source code][4])
 
 Eric Jones for his post on [building your own blog][5]
 
