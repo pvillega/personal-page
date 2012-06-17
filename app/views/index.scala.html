@@ -23,7 +23,11 @@
                     counterTag++;
                     if(counterTag >= quotes.length) counterTag = 0;
                 }
-                window.setInterval(swapHeader, 8000);
+                var intervalId = window.setInterval(swapHeader, 8000);
+                // we clean old intervals (to avoid pjax clashes)
+                for (var i = 1; i < intervalId; i++){
+                    window.clearInterval(i);
+                }
             });
         </script>
         @navbar()
