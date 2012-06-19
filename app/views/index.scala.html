@@ -54,12 +54,12 @@
                 @projects.map { p =>
                 <div class="row indexProjectArea">
                     <div class="span2">
-                        <a href="@p.link"><img src="@routes.Assets.at("images/projects/"+p.image)" /></a>
+                        <a href="@p.link" target="_blank"><img src="@routes.Assets.at("images/projects/"+p.image)" /></a>
                     </div>
                     <div class="span4">
                         <h3>@p.name</h3>
                         <p>@markdownShow(p.hashCode.abs.toString, p.comment)</p>
-                        <a href="@p.link">@p.link</a>
+                        <a href="@p.link" target="_blank">@p.link</a>
                     </div>
                 </div>
                 }

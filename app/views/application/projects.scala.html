@@ -18,7 +18,7 @@
     @list.map { p =>
     <div class="row indexProjectArea">
         <div class="span2">
-            <a href="@p.link"><img src="@routes.Assets.at("images/projects/"+p.image)" /></a>
+            <a href="@p.link" target="_blank"><img src="@routes.Assets.at("images/projects/"+p.image)" /></a>
         </div>
         <div class="span7">
             <div class="row">
@@ -30,7 +30,7 @@
             </div>
             <div class="row">
                 <div class="span1"><h5>@Messages("project.link")</h5></div>
-                <div class="span6"><a href="@p.link">@p.link</a></div>
+                <div class="span6"><a href="@p.link" target="_blank">@p.link</a></div>
             </div>
             <div class="row">
                 <div class="span1"><h5>@Messages("project.status")</h5></div>
