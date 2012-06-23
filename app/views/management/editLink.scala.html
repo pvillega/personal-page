@@ -23,7 +23,6 @@
     @helper.form(action = routes.Management.updateLink(id), 'class -> "well") {
 
         <input type="hidden" name="id" id="id" value="@id"/>
-        <input type="hidden" name="added" id="added" value="@(new java.util.Date().format("yyyy-MM-dd"))"/>
 
         @inputText(
             linkForm("link"),
@@ -34,12 +33,6 @@
         @inputText(
             linkForm("category"),
             '_label -> Messages("links.edit.category"),
-            '_error -> linkForm.globalError
-        )
-
-        @checkbox(
-            linkForm("done"),
-            '_label -> Messages("links.edit.done"),
             '_error -> linkForm.globalError
         )
 

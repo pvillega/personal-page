@@ -142,9 +142,7 @@ object JsonSupport {
       List(
         "id" -> JsNumber(o.id),
         "link" -> JsString(o.link),
-        "added" -> JsString(dateFormat.format(o.added)),
         "comment" -> JsString(o.comment),
-        "done" -> JsBoolean(o.done),
         "archive" -> JsBoolean(o.archive),
         "category" -> JsString(o.category)
       )
@@ -153,9 +151,7 @@ object JsonSupport {
     def reads(json: JsValue): Link = Link(
       id = (json \ "id").as[Int],
       link = (json \ "link").as[String],
-      added = dateFormat.parse((json \ "added").as[String]),
       comment =(json \ "comment").as[String],
-      done = (json \ "done").as[Boolean],
       archive = (json \ "archive").as[Boolean],
       category = (json \ "category").as[String]
     )

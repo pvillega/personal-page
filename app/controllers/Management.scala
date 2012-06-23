@@ -6,6 +6,7 @@ import play.api.{Logger}
 import play.api.i18n.Messages
 import play.api.mvc.{Controller}
 import models._
+import java.util
 
 /**
  * Created with IntelliJ IDEA.
@@ -303,12 +304,14 @@ object Management extends Controller with AccessControl {
     mapping(
       "id" -> number,
       "link" -> nonEmptyText,
-      "added" -> date,
-      "comment" -> nonEmptyText,
-      "done" -> boolean,
-      "archive" -> boolean,
-      "category" -> nonEmptyText
-    )(Link.apply)(Link.unapply)
+      "comment" -> optional(nonEmptyText),
+      "archive" -> optional(boolean),
+      "category" -> optional(nonEmptyText)
+    ){
+      (id, link, comment, archive, category) => Link(id, link, comment.getOrElse(""), archive.getOrElse(false), category.getOrElse(""))
+    }{
+      link: Link => Some(link.id,link.link,Some(link.comment),Some(link.archive),Some(link.category))
+    }
   )
 
   /**
@@ -318,8 +321,9 @@ object Management extends Controller with AccessControl {
   def listLinks() = isDev {
     implicit request =>
       Logger.info("Management.listLinks accessed")
-      val list = Link.all()
-      Ok(views.html.management.listLinks(list))
+      val archived = Link.getAllArchived()
+      val unchecked = Link.getAllUnchecked()
+      Ok(views.html.management.listLinks(archived, unchecked, linkForm))
   }
 
   /**
@@ -373,15 +377,6 @@ object Management extends Controller with AccessControl {
   }
 
   /**
-   * Allows user to add a new link to the list
-   */
-  def addLink() = isDev {
-    implicit request =>
-      Logger.info("Management.addLink accessed")
-      Ok(views.html.management.addLink(linkForm))
-  }
-
-  /**
    * Saves the contents of the edited project
    */
   def saveLink() = isDev {
@@ -391,13 +386,18 @@ object Management extends Controller with AccessControl {
         // Form has errors, redisplay it
         errors => {
           Logger.error("Management.saveLink errors while obtaining link: %s".format(errors))
-          BadRequest(views.html.management.addLink(errors))
+          val archived = Link.getAllArchived()
+          val unchecked = Link.getAllUnchecked()
+          BadRequest(views.html.management.listLinks(archived, unchecked, errors))
         },
         // We got a valid value, update
         link => {
           Logger.info("Management.saveLink saving link[%s]".format(link))
-          Link.save(link)
-          Redirect(routes.Management.listLinks()).flashing("success" -> Messages("links.edit.saved"))
+          if(Link.save(link)) {
+            Redirect(routes.Management.listLinks()).flashing("success" -> Messages("links.edit.saved"))
+          } else {
+            Redirect(routes.Management.listLinks()).flashing("warning" -> Messages("links.edit.existing"))
+          }
         }
       )
   }

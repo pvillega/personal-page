@@ -34,8 +34,7 @@ POST    /edit-project/:id/send           controllers.Management.updateProject(id
 POST    /delete-project/:id         controllers.Management.deleteProject(id: Int)
 
 GET     /list-links                controllers.Management.listLinks()
-GET     /add-link                controllers.Management.addLink()
-POST    /add-link/send           controllers.Management.saveLink()
+POST    /add-link                  controllers.Management.saveLink()
 GET     /edit-link/:id                controllers.Management.editLink(id: Int)
 POST    /edit-link/:id/send           controllers.Management.updateLink(id: Int)
 POST    /delete-link/:id         controllers.Management.deleteLink(id: Int)

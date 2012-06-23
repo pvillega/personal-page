@@ -39,10 +39,9 @@ object Application extends Controller {
   def archive() = Action {
     implicit request =>
       Logger.info("Application.archive accessed")
-      val unchecked = Link.getAllUnchecked()
       val archived = Link.getArchivedLinks()
-      Logger.debug("Application.archive - to show archived[%s] unchecked[%s]".format(archived, unchecked))
-      Ok(views.html.application.archive(archived, unchecked))
+      Logger.debug("Application.archive - to show archived[%s]".format(archived))
+      Ok(views.html.application.archive(archived))
   }
 
   /**

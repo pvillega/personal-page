@@ -1,7 +1,29 @@
-@(list: List[models.Link])(implicit request: play.api.mvc.RequestHeader)
+@(archived: List[models.Link], unchecked: List[models.Link], linkForm: Form[models.Link])(implicit request: play.api.mvc.RequestHeader)
 
+@import helper._
+@import helper.twitterBootstrap._
+
+@implicitField = @{ FieldConstructor(views.html.tag.formElement.f) }
 
 @import tag._
+
+@printList(list: List[models.Link])= {
+    @list.map { l =>
+    <div class="row">
+        <div class="span7">
+            <a href="@l.link">@l.link</a>
+        </div>
+        <div class="span1">
+            <a href="@routes.Management.editLink(l.id)" class="btn btn-success pjaxLink">@Messages("navigation.edit")</a>
+        </div>
+        <div class="span1">
+            @helper.form(action = routes.Management.deleteLink(l.id)) {
+            <input type="submit" class="btn btn-danger" value="@Messages("navigation.delete")" />
+            }
+        </div>
+    </div>
+    }
+}
 
 @layout(Messages("area.manageLinks")) {
     <div class="row">
@@ -11,7 +33,14 @@
     </div>
     <div class="row">
         <div class="span9">
-            <a href="@routes.Management.addLink()" class="btn btn-info pjaxLink">@Messages("links.add")</a>
+
+            @helper.form(action = routes.Management.saveLink(), 'class -> "well form-inline") {
+                <strong>@Messages("links.add")</strong>&nbsp;
+                <input type="hidden" name="id" id="id" value="-1"/>
+                <input type="text" class="span5" name="link" id="link" value=""/>
+                <button type="submit" class="btn btn-primary">@Messages("navigation.save")</button>
+            }
+
         </div>
     </div>
     <div class="row">
@@ -20,24 +49,42 @@
         </div>
     </div>
 
-
-    @list.map { l =>
+    <div class="tabbable">
         <div class="row">
-            <div class="span5">
-                <a href="@l.link">@l.link</a>
-            </div>
-            <div class="span1">
-                @l.done
-            </div>
-            <div class="span2">
-                (@l.added.format("dd-MM-yyyy"))
-                <a href="@routes.Management.editLink(l.id)" class="btn btn-success pjaxLink">@Messages("navigation.edit")</a>
-            </div>
-            <div class="span1">
-                @helper.form(action = routes.Management.deleteLink(l.id)) {
-                <input type="submit" class="btn btn-danger" value="@Messages("navigation.delete")" />
-                }
+            <div class="span9">
+                <ul class="nav nav-pills">
+                    <li class="active">
+                        <a href="#pending" data-toggle="tab" class="tabPill">@Messages("dump.pending")</a>
+                    </li>
+                    <li>
+                        <a href="#done" data-toggle="tab" class="tabPill">@Messages("dump.checked")</a>
+                    </li>
+                </ul>
             </div>
         </div>
-    }
+
+        <div class="tab-content">
+
+            <div class="tab-pane active" id="pending">
+                <div class="row">
+                    <div class="span9">
+                        @printList(unchecked)
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-pane" id="done">
+                <div class="row">
+                    <div class="span9">
+                        @printList(archived)
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
 }
+
+
+
+

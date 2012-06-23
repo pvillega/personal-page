@@ -14,9 +14,7 @@ import play.api.cache.Cache
  *   {
  *     "id": 1,
  *     "link": "http://www.google.es",
- *     "added": "1-1-2000",
  *     "comment": "a comment",
- *     "done": false,
  *     "archive": true,
  *     "category": "name"
  *   },
@@ -26,13 +24,14 @@ import play.api.cache.Cache
  * Each entry is an element in the json array
  *
  */
-case class Link(id: Int, link: String, added: Date, comment: String, done: Boolean, archive: Boolean, category: String )
+case class Link(id: Int, link: String, comment: String, archive: Boolean, category: String)
 
 object Link {
 
-  private val allKey = "dumpData"
-  private val archivedKey = "dumpArchived"
-  private val uncheckedKey = "dumpUnckd"
+  private val allKey = "lnkData"
+  private val archivedKey = "lnkmapArch"
+  private val allArchivedKey = "lnkallArch"
+  private val uncheckedKey = "lnkUnckd"
 
   /**
    * Initializes the cached structures for the application
@@ -51,8 +50,7 @@ object Link {
     Cache.getOrElse(allKey, controllers.Application.cacheStorage){
       Logger.info("Link.all - Link data not in cache, loading from file")
       val list = loadLinks
-
-      list.sortWith((d1, d2) => d1.added.after(d2.added))
+      list
     }
   }
 
@@ -68,13 +66,25 @@ object Link {
   }
 
   /**
+   * Returns a list with all archived links in the system
+   * @return a list with all archived links in the system
+   */
+  def getAllArchived() = {
+    Logger.info("Link.getAllArchived - Loading all archived links")
+    Cache.getOrElse(allArchivedKey, controllers.Application.cacheStorage){
+      all().filter(_.archive)
+    }
+  }
+
+
+  /**
    * Returns a list with all unchecked links in the system
    * @return a list with all unchecked links in the system
    */
   def getAllUnchecked() = {
     Logger.info("Link.getAllUnchecked - Loading all unchecked links")
     Cache.getOrElse(uncheckedKey, controllers.Application.cacheStorage){
-      all().filterNot(_.done)
+      all().filterNot(_.archive)
     }
   }
 
@@ -92,15 +102,20 @@ object Link {
    * Saves into filesystem the given link content
    * Only used in dev mode when editing links
    * @param link the link content to store
+   * @return true if the link was saved, false if the link was already in the system
    */
   def save(link: Link) = {
     Logger.info("Link.save - creating new entry in json file")
-    val nextId = if (all().isEmpty) { 1 } else { all().maxBy(_.id).id + 1 }
-    val newLink = link.copy(id = nextId)
+    val isInSystem = all().exists(l => l.link == link.link)
 
-    Logger.debug("Link.save - saving link[%s]".format(newLink))
-    val newList = newLink :: all()
-    JsonSupport.updateLinks(newList)
+    if (!isInSystem) {
+      val nextId = if (all().isEmpty) { 1 } else { all().maxBy(_.id).id + 1 }
+      val newLink = link.copy(id = nextId)
+      Logger.debug("Link.save - saving link[%s]".format(newLink))
+      val newList = newLink :: all()
+      JsonSupport.updateLinks(newList)
+    }
+    !isInSystem
   }
 
   /**
