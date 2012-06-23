@@ -306,11 +306,13 @@ object Management extends Controller with AccessControl {
       "link" -> nonEmptyText,
       "comment" -> optional(nonEmptyText),
       "archive" -> optional(boolean),
-      "category" -> optional(nonEmptyText)
+      "category" -> optional(nonEmptyText),
+      "subcategory" -> optional(nonEmptyText),
+      "subject" -> optional(nonEmptyText)
     ){
-      (id, link, comment, archive, category) => Link(id, link, comment.getOrElse(""), archive.getOrElse(false), category.getOrElse(""))
+      (id, link, comment, archive, category, subcategory, subject) => Link(id, link, comment.getOrElse(""), archive.getOrElse(false), category.getOrElse("Miscellanea"), subcategory.getOrElse("Generic"), subject.getOrElse("Other"))
     }{
-      link: Link => Some(link.id,link.link,Some(link.comment),Some(link.archive),Some(link.category))
+      link: Link => Some(link.id,link.link,Some(link.comment),Some(link.archive),Some(link.category),Some(link.subcategory),Some(link.subject))
     }
   )
 

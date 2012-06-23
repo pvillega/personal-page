@@ -1,4 +1,4 @@
-@(archived: Map[String, List[models.Link]])(implicit request: play.api.mvc.RequestHeader)
+@(archived: Map[String, Map[String, Map[String, List[models.Link]]] ])(implicit request: play.api.mvc.RequestHeader)
 
 
 @import tag._
@@ -18,8 +18,7 @@
     }
 }
 
-
-@printArchive(arch: Map[String, List[models.Link]]) = {
+@printArchive(arch: Map[String, Map[String, Map[String, List[models.Link]]] ]) = {
 <div id="accordionArchive" class="accordion">
     @arch.map { k =>
     <div class="accordion-group" name="@k._1">
@@ -30,7 +29,43 @@
         </div>
         <div class="accordion-body collapse" id="@k._1" style="height: 0px;">
             <div class="accordion-inner">
-                @printList(k._2)
+
+                <div id="accordionArchive@k._1" class="accordion">
+                @k._2.map { sk =>
+                    <div class="accordion-group" name="@k._1@sk._1">
+                        <div class="accordion-heading">
+                            <a href="#@k._1@sk._1" data-parent="#accordionArchive@k._1" data-toggle="collapse" class="accordion-toggle archiveCategory">
+                                @sk._1
+                            </a>
+                        </div>
+                        <div class="accordion-body collapse" id="@k._1@sk._1" style="height: 0px;">
+                            <div class="accordion-inner">
+
+                                <div id="accordionArchive@k._1@sk._1" class="accordion">
+                                    @sk._2.map { subj =>
+                                    <div class="accordion-group" name="@k._1@sk._1@subj._1">
+                                        <div class="accordion-heading">
+                                            <a href="#@k._1@sk._1@subj._1" data-parent="#accordionArchive@k._1@sk._1" data-toggle="collapse" class="accordion-toggle archiveCategory">
+                                                @subj._1
+                                            </a>
+                                        </div>
+                                        <div class="accordion-body collapse" id="@k._1@sk._1@subj._1" style="height: 0px;">
+                                            <div class="accordion-inner">
+                                                @printList(subj._2)
+                                            </div>
+                                        </div>
+                                    </div>
+                                    }
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+                }
+                </div>
+
+
             </div>
         </div>
     </div>
@@ -55,18 +90,7 @@
             </div>
             <div class="row">
                 <div class="span9">
-                    <strong>@Messages("dump.done.search")</strong>
-                </div>
-            </div>
-            <div class="row">
-                <div class="span9">
-                    <input type="text" class="span4" data-provide="typeahead" id="searchTags" />
-                    <script type="text/javascript">
-                        $(function() {
-                            var values = ['@archived.keys.mkString("','")'];
-                            tagSearch('searchTags', values);
-                        });
-                    </script>
+                  &nbsp;
                 </div>
             </div>
 

@@ -16,15 +16,18 @@ import play.api.cache.Cache
  *     "link": "http://www.google.es",
  *     "comment": "a comment",
  *     "archive": true,
- *     "category": "name"
+ *     "category": "name",
+ *     "subcategory": "another name",
+ *     "subject": "3rd name"
  *   },
  *   ... more entries ...
  *  ]
  *
  * Each entry is an element in the json array
+ * We allow 3 level of categories for easy classification: category, subcategory, subject
  *
  */
-case class Link(id: Int, link: String, comment: String, archive: Boolean, category: String)
+case class Link(id: Int, link: String, comment: String, archive: Boolean, category: String, subcategory: String, subject: String)
 
 object Link {
 
@@ -55,13 +58,16 @@ object Link {
   }
 
   /**
-   * Returns a Map[String, List[Link]] with al archived items grouped by category
-   * @return a Tuple with two list of links: unchecked and checked
+   * Returns a Map with all archived items grouped by category and subcategories
+   * @return a Map with all archived items grouped by category and subcategories
    */
   def getArchivedLinks() = {
     Logger.info("Link.getArchivedLinks - Loading Links with the archive flag enabled")
       Cache.getOrElse(archivedKey, controllers.Application.cacheStorage){
-      all().filter(_.archive).groupBy(_.category)
+      val category = all().filter(_.archive).groupBy(_.category)
+      val subcategory = category.map{ entry => (entry._1, entry._2.groupBy(_.subcategory)) }
+      val subject = subcategory.map{ entry => (entry._1, entry._2.map { sc => (sc._1, sc._2.groupBy(_.subject))} ) }
+      subject
     }
   }
 

@@ -144,7 +144,9 @@ object JsonSupport {
         "link" -> JsString(o.link),
         "comment" -> JsString(o.comment),
         "archive" -> JsBoolean(o.archive),
-        "category" -> JsString(o.category)
+        "category" -> JsString(o.category),
+        "subcategory" -> JsString(o.subcategory),
+        "subject" -> JsString(o.subject)
       )
     )
 
@@ -153,7 +155,9 @@ object JsonSupport {
       link = (json \ "link").as[String],
       comment =(json \ "comment").as[String],
       archive = (json \ "archive").as[Boolean],
-      category = (json \ "category").as[String]
+      category = (json \ "category").as[String],
+      subcategory = (json \ "subcategory").as[String],
+      subject = (json \ "subject").as[String]
     )
   }
 

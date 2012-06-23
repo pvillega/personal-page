@@ -36,6 +36,18 @@
             '_error -> linkForm.globalError
         )
 
+        @inputText(
+            linkForm("subcategory"),
+            '_label -> Messages("links.edit.subcategory"),
+            '_error -> linkForm.globalError
+        )
+
+        @inputText(
+            linkForm("subject"),
+            '_label -> Messages("links.edit.subject"),
+            '_error -> linkForm.globalError
+        )
+
         @checkbox(
             linkForm("archive"),
             '_label -> Messages("links.edit.archive"),
