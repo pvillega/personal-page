@@ -33,20 +33,39 @@
         @inputText(
             linkForm("category"),
             '_label -> Messages("links.edit.category"),
-            '_error -> linkForm.globalError
+            '_error -> linkForm.globalError,
+            Symbol("data-provide") -> "typeahead"
         )
+        <script type="text/javascript">
+            $(function() {
+                tagSearch('category', @models.Link.getAllCategories());
+            });
+        </script>
+
 
         @inputText(
             linkForm("subcategory"),
             '_label -> Messages("links.edit.subcategory"),
-            '_error -> linkForm.globalError
+            '_error -> linkForm.globalError,
+            Symbol("data-provide") -> "typeahead"
         )
+        <script type="text/javascript">
+            $(function() {
+                tagSearch('category', @models.Link.getAllSubCategories());
+            });
+        </script>
 
         @inputText(
             linkForm("subject"),
             '_label -> Messages("links.edit.subject"),
-            '_error -> linkForm.globalError
+            '_error -> linkForm.globalError,
+            Symbol("data-provide") -> "typeahead"
         )
+        <script type="text/javascript">
+            $(function() {
+                tagSearch('category', @models.Link.getAllSubjects());
+            });
+        </script>
 
         @checkbox(
             linkForm("archive"),

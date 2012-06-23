@@ -95,6 +95,31 @@ object Link {
   }
 
   /**
+   * Returns a list of all subcategories to be used in autocomplete
+   * @return a list of all subcategories to be used in autocomplete
+   */
+  def getAllSubCategories() = {
+    all().groupBy(_.subcategory).keySet.mkString("['","','","']")
+  }
+
+  /**
+   * Returns a list of all subject to be used in autocomplete
+   * @return a list of all subject to be used in autocomplete
+   */
+  def getAllSubjects() = {
+    all().groupBy(_.subject).keySet.mkString("['","','","']")
+  }
+
+  /**
+   * Returns a list of all categories to be used in autocomplete
+   * @return a list of all categories to be used in autocomplete
+   */
+  def getAllCategories() = {
+    all().groupBy(_.category).keySet.mkString("['","','","']")
+  }
+
+
+  /**
    * Retrieves the link with the given id
    * Only used in dev mode when editing links
    * @param id the id of the project
