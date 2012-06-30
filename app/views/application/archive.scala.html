@@ -23,33 +23,33 @@
     @arch.map { k =>
     <div class="accordion-group" name="@k._1">
         <div class="accordion-heading">
-            <a href="#@k._1" data-parent="#accordionArchive" data-toggle="collapse" class="accordion-toggle archiveCategory">
+            <a href="#@k._1" data-toggle="collapse" class="accordion-toggle archiveCategory">
                 @k._1
             </a>
         </div>
-        <div class="accordion-body collapse" id="@k._1" style="height: 0px;">
+        <div class="accordion-body collapse" id="@k._1.replace(" ", "")" style="height: 0px;">
             <div class="accordion-inner">
 
                 <div id="accordionArchive@k._1" class="accordion">
                 @k._2.map { sk =>
-                    <div class="accordion-group" name="@k._1@sk._1">
+                    <div class="accordion-group" name="@k._1.replace(" ", "")@sk._1.replace("\\w", "")">
                         <div class="accordion-heading">
-                            <a href="#@k._1@sk._1" data-parent="#accordionArchive@k._1" data-toggle="collapse" class="accordion-toggle archiveCategory">
+                            <a href="#@k._1.replace(" ", "")@sk._1.replace(" ", "")" data-toggle="collapse" class="accordion-toggle archiveCategory">
                                 @sk._1
                             </a>
                         </div>
-                        <div class="accordion-body collapse" id="@k._1@sk._1" style="height: 0px;">
+                        <div class="accordion-body collapse" id="@k._1.replace(" ", "")@sk._1.replace(" ", "")" style="height: 0px;">
                             <div class="accordion-inner">
 
-                                <div id="accordionArchive@k._1@sk._1" class="accordion">
+                                <div id="accordionArchive@k._1.replace(" ", "")@sk._1.replace(" ", "")" class="accordion">
                                     @sk._2.map { subj =>
-                                    <div class="accordion-group" name="@k._1@sk._1@subj._1">
+                                    <div class="accordion-group" name="@k._1.replace(" ", "")@sk._1.replace(" ", "")@subj._1.replace(" ", "")">
                                         <div class="accordion-heading">
-                                            <a href="#@k._1@sk._1@subj._1" data-parent="#accordionArchive@k._1@sk._1" data-toggle="collapse" class="accordion-toggle archiveCategory">
+                                            <a href="#@k._1.replace(" ", "")@sk._1.replace(" ", "")@subj._1.replace(" ", "")" data-toggle="collapse" class="accordion-toggle archiveCategory">
                                                 @subj._1
                                             </a>
                                         </div>
-                                        <div class="accordion-body collapse" id="@k._1@sk._1@subj._1" style="height: 0px;">
+                                        <div class="accordion-body collapse" id="@k._1.replace(" ", "")@sk._1.replace(" ", "")@subj._1.replace(" ", "")" style="height: 0px;">
                                             <div class="accordion-inner">
                                                 @printList(subj._2)
                                             </div>

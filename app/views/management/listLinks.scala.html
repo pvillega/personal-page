@@ -12,6 +12,9 @@
     <div class="row">
         <div class="span7">
             <a href="@l.link">@l.link</a>
+            <p>
+                @l.category | @l.subcategory | @l.subject
+            </p>
         </div>
         <div class="span1">
             <a href="@routes.Management.editLink(l.id)" class="btn btn-success pjaxLink">@Messages("navigation.edit")</a>

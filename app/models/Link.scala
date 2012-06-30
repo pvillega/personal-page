@@ -63,7 +63,7 @@ object Link {
    */
   def getArchivedLinks() = {
     Logger.info("Link.getArchivedLinks - Loading Links with the archive flag enabled")
-      Cache.getOrElse(archivedKey, controllers.Application.cacheStorage){
+    Cache.getOrElse(archivedKey, controllers.Application.cacheStorage){
       val category = all().filter(_.archive).groupBy(_.category)
       val subcategory = category.map{ entry => (entry._1, entry._2.groupBy(_.subcategory)) }
       val subject = subcategory.map{ entry => (entry._1, entry._2.map { sc => (sc._1, sc._2.groupBy(_.subject))} ) }
