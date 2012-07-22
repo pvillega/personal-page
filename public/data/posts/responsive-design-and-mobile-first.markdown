@@ -166,5 +166,5 @@ In this simple example we get to the “ready” status **50% faster**. As you c
 Feel free to add any comments on the subject below!
 
 
-  [1]: http://perevillega.com/assets/images/posts/responsive-desktop.png
-  [2]: http://perevillega.com/assets/images/posts/responsive-network.png
+  [1]: http://www.perevillega.com/assets/images/posts/responsive-desktop.png
+  [2]: http://www.perevillega.com/assets/images/posts/responsive-network.png
