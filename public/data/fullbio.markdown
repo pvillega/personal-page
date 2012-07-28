@@ -34,7 +34,7 @@ I deliver. I pride myself of delivering working solutions on time. There's been 
 
 I improve things. It may be a bit of an obsession of mine, but I like clean code and structures. And I like automation that reduces repetitive work (which I dislike). Granted, sometimes my code is not great (and I thank code reviews for their existence). But once I see an issue I'll go the extra mile to solve it, either via automation of a task or by refactoring that fragment.
 
-I code. Currently in Scala and Java and using Play Framework for HTML 5 apps. But it may change. Clojure? Node.js? Who knows. The down side is that with so many interesting things around in the software world choosing is hard.
+I code. Currently in Scala and Java and using Play Framework for HTML 5 apps. But it may change. Clojure? Node.js? Who knows. The down side of software development is that with so many interesting things around choosing is hard.
 
 I've created a site to manage [Play Framework modules][5]. I was part of [GSOC 2010][6]. I did this site. And after it I'll find some other project to work in. 
 
