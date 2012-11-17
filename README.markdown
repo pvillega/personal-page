@@ -11,7 +11,7 @@ So, basically, something I wanted and now I built :)
 
 This application uses:
 
-+ Play Framework 2.0.1 w/ Scala
++ Play Framework 2.0.4 w/ Scala
 + Bootstrap 2.2.1
 + JQuery 1.8.1
 + [Mail plugin][1]
@@ -30,28 +30,7 @@ The Procfile command uses a custom variable (**MYCONFIG**) that is expected to c
 
 You can edit the Procfile to change the way this works.
 
-
-## How to change the contents
-
-Some strings are internationalized, check *conf/messages* to see the list. To alter the layout you'll need toe dit the templates and less files, no fast-track for that.
-
-The following sections explain how to modify the content in some sections.
-
-### Index Page
-
-The following places contain the information displayed in the index page
-
-- The avatar displayed in the top-left area can be configured at **application.conf** under the *avatar.url* key. If the image is a local resource, the path must be the external url (*/assets/images/...*)
-- There is a file *whoami.markdown* under **/public/data/**. Content added to this file (markdown format) will be displayed in the top-left area of the page
-- The tag file *contact.scala.htm* located under **app/views/tag/** contains the contact details displayed on the main page
-- The tag file *trivia.scala.htm* located under **app/views/tag/** contains the trivia details displayed on the main page
-- Projects and posts are retrieved from the list of Posts and Projects, see below
-
-### Sidebar
-
-To modify the contents of the sidebar shown in some areas (like Projects or About) edit the tag *sidebar.scala.html* located under **app/views/tag/**
-
-### Others
+## Edit content
 
 In dev mode you can access the administration area that allows you to edit content like About, Posts, Link Dump, etc.
 
@@ -94,6 +73,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 
 The Theme is based in Kevin Burke's theme for Wordpress (with minor modifications), [licensed as follows][7]:
+
 
 Copyright (c) 2012 Kevin Burke
 
