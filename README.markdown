@@ -12,10 +12,9 @@ So, basically, something I wanted and now I built :)
 This application uses:
 
 + Play Framework 2.0.1 w/ Scala
-+ Bootstrap 2.0.4
-+ JQuery 1.7.1
++ Bootstrap 2.2.1
++ JQuery 1.8.1
 + [Mail plugin][1]
-+ [Pjax][9]
 + [Tweet][10]
 + Other components I may have forgotten to mention
 
@@ -71,6 +70,7 @@ Follow these steps:
 
 See my own page at <http://www.perevillega.com>
 
+
 ## Credit to
 
 Brian Nesbitt for his [Play 2.0 Beta blog system][3] ([source code][4])
@@ -112,6 +112,5 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 [6]: http://kev.inburke.com/
 [7]: https://bitbucket.org/kevinburke/blog-design/src/8119db77e1c1/LICENSE
 [8]: http://theoatmeal.com/
-[9]: https://github.com/defunkt/jquery-pjax
 [10]: https://github.com/seaofclouds/tweet
 
