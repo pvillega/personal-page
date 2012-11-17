@@ -14,8 +14,7 @@
             </div>
             @if(play.api.Play.isDev(play.api.Play.current)) {
             <div class="row hideMobile">
-                <div class="span1">&nbsp;</div>
-                <div class="span2"><a href="@routes.Management.editQuotes()" class="pjaxLink" rel="tooltip" title="@Messages("area.manageQuotes.tooltip")">@Messages("area.manageQuotes")</a></div>
+                <div class="span3">&nbsp;</div>
                 <div class="span2"><a href="@routes.Management.editBio()" class="pjaxLink" rel="tooltip" title="@Messages("area.editBio.tooltip")">@Messages("area.editBio")</a></div>
                 <div class="span2"><a href="@routes.Management.listPosts()" class="pjaxLink" rel="tooltip" title="@Messages("area.managePosts.tooltip")">@Messages("area.managePosts")</a></div>
                 <div class="span2"><a href="@routes.Management.listProjects()" class="pjaxLink" rel="tooltip" title="@Messages("area.manageProjects.tooltip")">@Messages("area.manageProjects")</a></div>

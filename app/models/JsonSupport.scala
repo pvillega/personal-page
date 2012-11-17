@@ -16,7 +16,6 @@ object JsonSupport {
   val postsPath = "public/data/posts/list.json"
   val projectsPath = "public/data/projects/list.json"
   val linksPath = "public/data/dump/list.json"
-  val quotesPath = "public/data/header/quotes.json"
 
   /**
    * Stores the list of Posts into the given file as json
@@ -158,38 +157,6 @@ object JsonSupport {
       category = (json \ "category").as[String],
       subcategory = (json \ "subcategory").as[String],
       subject = (json \ "subject").as[String]
-    )
-  }
-
-  /**
-   * Stores the list of quotes in the given file as Json
-   * @param list the list of links to store
-   */
-  def updateQuotes(list: List[Quote]) = {
-    saveDataToJson[Quote](quotesPath, Json.toJson(list).toString())
-  }
-
-  /**
-   * Recovers all the quotes from the json file
-   */
-  def loadQuotes() = {
-    val json = loadJsonFromFile(quotesPath)
-    json.as[List[Quote]]
-  }
-
-  /**
-   * Implicit conversion from Link to Json
-   */
-  implicit object quoteToJson extends Format[Quote] {
-
-    def writes(o: Quote): JsValue = JsObject(
-      List(
-        "text" -> JsString(o.quote)
-      )
-    )
-
-    def reads(json: JsValue): Quote = Quote(
-      (json \ "text").as[String]
     )
   }
 

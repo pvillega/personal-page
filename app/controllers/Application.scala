@@ -7,7 +7,6 @@ import play.api.Play.current
 import models._
 import play.api.Play.current
 
-//TODO: unit testing (we don't need sessions, we can do it now!
 object Application extends Controller {
 
   //Admin mail to be made available across app
@@ -28,9 +27,10 @@ object Application extends Controller {
       val projects = Project.homeList()
       val bio = Bio.getBio()
       val posts = Post.homeList()
-      val quotes = Quote.all()
-      Logger.debug("Application.index - projects [%s] bio [%s]".format(projects, bio))
-      Ok(views.html.index(projects, posts, bio, quotes))
+      if(Logger.isTraceEnabled){
+        Logger.trace("Application.index - projects [%s] bio [%s]".format(projects, bio))
+      }
+      Ok(views.html.index(projects, posts, bio))
   }
 
   /**
@@ -40,7 +40,9 @@ object Application extends Controller {
     implicit request =>
       Logger.info("Application.archive accessed")
       val archived = Link.getArchivedLinks()
-      Logger.debug("Application.archive - to show archived[%s]".format(archived))
+      if(Logger.isTraceEnabled){
+        Logger.trace("Application.archive - to show archived[%s]".format(archived))
+      }
       Ok(views.html.application.archive(archived))
   }
 
@@ -51,7 +53,9 @@ object Application extends Controller {
     implicit request =>
       Logger.info("Application.projects accessed")
       val projects = Project.all()
-      Logger.debug("Application.projects - projects to show [%s]".format(projects))
+      if(Logger.isTraceEnabled){
+        Logger.trace("Application.projects - projects to show [%s]".format(projects))
+      }
       Ok(views.html.application.projects(projects))
   }
 
@@ -62,7 +66,9 @@ object Application extends Controller {
     implicit request =>
       Logger.info("Application.fullBio accessed")
       val bio = Bio.getFullBio()
-      Logger.debug("Application.fullBio - fullBio to show [%s]".format(bio))
+      if(Logger.isTraceEnabled){
+        Logger.trace("Application.fullBio - fullBio to show [%s]".format(bio))
+      }
       Ok(views.html.application.fullbio(bio))
   }
 
@@ -74,7 +80,9 @@ object Application extends Controller {
     implicit request =>
       Logger.info("Application.blog accessed for page[%d]".format(page))
       val (posts, previous, next) = Post.page(page)
-      Logger.debug("Application.blog - posts to show [%s]".format(posts))
+      if(Logger.isTraceEnabled){
+        Logger.trace("Application.blog - posts to show [%s]".format(posts))
+      }
       Ok(views.html.application.posts(posts, previous, next, page))
   }
 
@@ -87,7 +95,9 @@ object Application extends Controller {
     implicit request =>
       Logger.info("Application.tagged accessed for tag[%s] page[%d]".format(tag, page))
       val (posts, previous, next) = Post.tagged(tag, page)
-      Logger.debug("Application.tagged - posts to show [%s]".format(posts))
+      if(Logger.isTraceEnabled){
+        Logger.trace("Application.tagged - posts to show [%s]".format(posts))
+      }
       Ok(views.html.application.tagged(posts, previous, next, page, tag))
   }
 
@@ -105,7 +115,9 @@ object Application extends Controller {
       Logger.info("Application.post accessed for id[%d] slug[%s][%s-%s-%s]".format(id, slug, year, month, day))
       Post.getById(id) match {
         case Some(post) => {
-          Logger.debug("Application.post - post to show [%s]".format(post))
+          if(Logger.isTraceEnabled){
+            Logger.trace("Application.post - post to show [%s]".format(post))
+          }
           Ok(views.html.application.post(post))
         }
         case _ => {
@@ -124,7 +136,9 @@ object Application extends Controller {
       val render = Cache.getOrElse(rssKey, cacheStorage) {
         Logger.info("Application.rss")
         val posts = Post.all()
-        Logger.debug("Application.rss - posts to show [%s]".format(posts))
+        if(Logger.isTraceEnabled){
+          Logger.trace("Application.rss - posts to show [%s]".format(posts))
+        }
         views.html.rss(posts)
       }
       Ok(render).as("application/rss+xml")
@@ -139,7 +153,9 @@ object Application extends Controller {
       val render = Cache.getOrElse(sitemapKey, cacheStorage) {
         Logger.info("Application.sitemap")
         val sitemaps = Sitemap.generateSitemap()
-        Logger.debug("Application.sitemap - list to show [%s]".format(sitemaps))
+        if(Logger.isTraceEnabled){
+          Logger.trace("Application.sitemap - list to show [%s]".format(sitemaps))
+        }
         views.html.sitemap(sitemaps)
       }
       Ok(render).as("application/xml")

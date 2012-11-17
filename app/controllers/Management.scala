@@ -15,45 +15,6 @@ import java.util
  */
 object Management extends Controller with AccessControl {
 
-  //form to store quotes
-  val quotesForm: Form[QuoteForm] = Form(
-    mapping(
-      "quote" -> list(nonEmptyText)
-    )(QuoteForm.apply)(QuoteForm.unapply)
-  )
-
-
-  /**
-   * Displays the edit page for quotes
-   */
-  def editQuotes() = isDev {
-    implicit request =>
-      Logger.info("Management.editQuotes accessed")
-      val quotes = QuoteForm(Quote.all().map{ q => q.quote})
-      Ok(views.html.management.editQuotes(quotesForm.fill(quotes)))
-  }
-
-  /**
-   * Saves the list of quotes
-   */
-  def saveQuotes() = isDev {
-    implicit request =>
-      Logger.info("Management.saveQuotes accessed")
-      quotesForm.bindFromRequest.fold(
-        // Form has errors, redisplay it
-        errors => {
-          Logger.error("Management.saveQuotes errors while obtaining Quotes: %s".format(errors))
-          BadRequest(views.html.management.editQuotes(errors))
-        },
-        // We got a valid value, update
-        quotes => {
-          Logger.info("Management.saveQuotes saving quotes[%s]".format(quotes))
-          Quote.save(quotes.list.map { q => Quote(q) })
-          Redirect(routes.Management.editQuotes()).flashing("success" -> Messages("quotes.edit.saved"))
-        }
-      )
-  }
-
   // form to store posts
   val postForm: Form[PostText] = Form(
     mapping(

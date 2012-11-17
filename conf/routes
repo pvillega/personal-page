@@ -14,8 +14,6 @@ GET     /rss                     controllers.Application.rss()
 GET     /sitemap                 controllers.Application.sitemap()
 
 # Management - Available only on dev mode
-GET     /edit-quotes               controllers.Management.editQuotes()
-POST    /edit-quotes/send          controllers.Management.saveQuotes()
 GET     /list-posts                controllers.Management.listPosts()
 GET     /add-post                controllers.Management.addPost()
 POST    /add-post/send           controllers.Management.savePost()

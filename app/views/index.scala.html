@@ -1,9 +1,13 @@
-@(projects: List[models.Project], posts: List[models.Post], bio: String, quotes: List[models.Quote])(implicit request: play.api.mvc.RequestHeader)
+@(projects: List[models.Project], posts: List[models.Post], bio: String)(implicit request: play.api.mvc.RequestHeader)
 
 @import tag._
 @import play.api.Play.current
 
-@main(Messages("app.title")) {
+@moreScripts = {
+    <script src="@routes.Assets.at("javascripts/index.pv.min.js")" type="text/javascript"></script>
+}
+
+@main(Messages("app.title"), moreScripts) {
         <header role="banner" id="branding">
             <h1 class="title">
                 <a href="@routes.Application.index()" class="pjaxLink">@Messages("app.title")</a>
@@ -12,24 +16,6 @@
                 <h5>Looking for a nerdy tag line here</h5>
             </div>
         </header>
-        <script type="text/javascript">
-            $(function(){
-                var counterTag = 0;
-                function swapHeader() {
-                    var quotes = @Html(quotes.mkString("[\"", "\",\"","\"]"));
-                    var tag = $('#tagline');
-                    tag.html('<h4>'+quotes[counterTag]+'</h4>');
-
-                    counterTag++;
-                    if(counterTag >= quotes.length) counterTag = 0;
-                }
-                var intervalId = window.setInterval(swapHeader, 8000);
-                // we clean old intervals (to avoid pjax clashes)
-                for (var i = 1; i < intervalId; i++){
-                    window.clearInterval(i);
-                }
-            });
-        </script>
         @navbar()
 
         <div class="row">

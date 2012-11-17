@@ -37,7 +37,6 @@ object Global extends GlobalSettings {
     Link.init()
     Project.init()
     Post.init()
-    Quote.init()
     Sitemap.init()
   }
 

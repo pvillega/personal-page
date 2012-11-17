@@ -9,7 +9,7 @@ ENTER = 13
 SPACE = 32
 COMMA = 188
 
-#Function that enables teh search by tag in ARchive
+#Function that enables the search by tag in Archive
 # id: id of the element to modify
 # values: array with valid suggestions
 root.tagSearch = (id, values) ->
@@ -38,7 +38,6 @@ root.tagSearch = (id, values) ->
         else
             $('.accordion-group').show()
 
-
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Below there are core functional scripts, don't change
 
@@ -47,23 +46,6 @@ root.tagSearch = (id, values) ->
 window.$.noConflict()
 window.$ = window.$.attachReady(jQuery)
 
-# Enable Pjax on all anchors configured to use it
-# Anchors with class pjaxLink will do Pjax requests
-if $.support.pjax
-    $('.pjaxLink').pjax('#mainContent')
-
-# Events to check after ajax load, like social buttons loading
-$('#mainContent').live 'pjax:end', (e, xhr, err) ->
-        log("End pjax event fired")
-        # Reinitialize AddThis if it's inside the loaded fragment
-        if window.addthis
-            addthis.toolbox $(".addthis_toolbox").get(0)
-            addthis.counter $(".addthis_counter").get(0)
-        #console.log("End pjax event fired - end")
-
-$('#mainContent').live 'pjax:start', (e, xhr, err) ->
-        log("Start pjax event fired")
-
 # Prevention of window hijack, run after all jquery scripts
 $('html').css 'display': 'none'
 if( self == top )
@@ -71,7 +53,9 @@ if( self == top )
 else
     top.location = self.location
 
+# Bootstrap CSS Fallback, uses a div with bootstrap modal styles that should not be visible if bootstrap has loaded properly.
+if $('.modal.hide').is(':visible')
+    $('<link rel="stylesheet" type="text/css" href="/assets/stylesheets/bootstrap.221.min.css" />').prependTo('head')
+    $('<link rel="stylesheet" type="text/css" href="/assets/stylesheets/bootstrap-responsive.221.min.css" />').prependTo('head')
 
-# Google analytics script, run at the end - Change UA-XXXXX-X to be your site's ID
-window._gaq = [['_setAccount', googleAnalyticsCode],['_trackPageview'],['_trackPageLoadTime']];
-Modernizr.load load: (if 'https:' == location.protocol then '//ssl' else '//www') + '.google-analytics.com/ga.js'
+
