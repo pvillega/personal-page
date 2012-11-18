@@ -16,6 +16,9 @@ object Application extends Controller {
   val cacheStorage = Play.configuration.getInt("memcached.time").getOrElse(86400)
 
   val indexKey = "indexPage"
+  val fullBioKey = "fullBioPage"
+  val projectsKey = "projectsPage"
+  val archiveKey = "archivePage"
   val rssKey = "rssPage"
   val sitemapKey = "sitemapPage"
 
@@ -38,40 +41,46 @@ object Application extends Controller {
   /**
    * Shows the links stored to check later
    */
-  def archive() = Action {
-    implicit request =>
-      Logger.info("Application.archive accessed")
-      val archived = Link.getArchivedLinks()
-      if(Logger.isTraceEnabled){
-        Logger.trace("Application.archive - to show archived[%s]".format(archived))
-      }
-      Ok(views.html.application.archive(archived))
+  def archive() = Cached(archiveKey, cacheStorage) {
+    Action {
+      implicit request =>
+        Logger.info("Application.archive accessed")
+        val archived = Link.getArchivedLinks()
+        if(Logger.isTraceEnabled){
+          Logger.trace("Application.archive - to show archived[%s]".format(archived))
+        }
+        Ok(views.html.application.archive(archived))
+    }
   }
 
   /**
    * Shows the projects stored
    */
-  def projects() = Action {
-    implicit request =>
-      Logger.info("Application.projects accessed")
-      val projects = Project.all()
-      if(Logger.isTraceEnabled){
-        Logger.trace("Application.projects - projects to show [%s]".format(projects))
-      }
-      Ok(views.html.application.projects(projects))
+  def projects() = Cached(projectsKey, cacheStorage) {
+    Action {
+      implicit request =>
+        Logger.info("Application.projects accessed")
+        val projects = Project.all()
+        if(Logger.isTraceEnabled){
+          Logger.trace("Application.projects - projects to show [%s]".format(projects))
+        }
+        Ok(views.html.application.projects(projects))
+    }
   }
 
   /**
    * Shows the full bio page
    */
-  def fullBio() = Action {
-    implicit request =>
-      Logger.info("Application.fullBio accessed")
-      val bio = Bio.getFullBio()
-      if(Logger.isTraceEnabled){
-        Logger.trace("Application.fullBio - fullBio to show [%s]".format(bio))
-      }
-      Ok(views.html.application.fullbio(bio))
+  def fullBio() = Cached(fullBioKey, cacheStorage) {
+    Action {
+      implicit request =>
+        Logger.info("Application.fullBio accessed")
+        val bio = Bio.getFullBioHtml()
+        if(Logger.isTraceEnabled){
+          Logger.trace("Application.fullBio - fullBio to show [%s]".format(bio))
+        }
+        Ok(views.html.application.fullbio(bio))
+    }
   }
 
   /**

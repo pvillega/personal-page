@@ -34,11 +34,11 @@
             </div>
             <div class="row">
                 <div class="span1"><h5>@Messages("project.status")</h5></div>
-                <div class="span6">@markdownShow(p.status.hashCode.abs.toString, p.status)</div>
+                <div class="span6">@p.statusHtml</div>
             </div>
             <div class="row">
                 <div class="span1"><h5>@Messages("project.description")</h5></div>
-                <div class="span6">@markdownShow(p.hashCode.abs.toString, p.comment)</div>
+                <div class="span6">@p.commentHtml</div>
             </div>
             <hr/>
         </div>

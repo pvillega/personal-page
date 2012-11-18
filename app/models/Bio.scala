@@ -3,6 +3,7 @@ package models
 import play.api.Logger
 import play.api.cache.Cache
 import play.api.Play.current
+import play.api.templates.Html
 
 /**
  * Stores the contents of the Bio markdown file
@@ -18,6 +19,7 @@ object Bio {
   val fullBio = "public/data/fullbio.markdown"
 
   private val fullKey = "fullBio"
+  private val fullHtmlKey = "fullBioHtml"
 
   /**
    * Initializes the cached structures for the application
@@ -32,6 +34,15 @@ object Bio {
     Cache.getOrElse(fullKey, controllers.Application.cacheStorage){
       Logger.info("Bio.getFullBio - Bio data not in cache, loading from file")
       MarkdownSupport.loadMarkdown(fullBio)
+    }
+  }
+
+  def getFullBioHtml() = {
+    Logger.info("Bio.getFullBioHtml - Loading Bio as Html")
+    Cache.getOrElse(fullHtmlKey, controllers.Application.cacheStorage){
+      Logger.info("Bio.getFullBioHtml - Bio data not in cache")
+      val markdown = getFullBio()
+      Html(MarkdownSupport.convertToHtml(markdown))
     }
   }
 

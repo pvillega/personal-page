@@ -41,6 +41,7 @@ object Link {
    */
   def init() = {
     all()
+    getArchivedLinks()
   }
 
   /**
@@ -120,7 +121,7 @@ object Link {
 
 
   /**
-   * Retrieves the link with the given id
+   * Retrieves the link with the given id                           getAllArchived
    * Only used in dev mode when editing links
    * @param id the id of the project
    */
