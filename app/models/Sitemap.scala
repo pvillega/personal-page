@@ -21,11 +21,6 @@ object Sitemap {
 
   private val sitemapKey = "sitemapXML"
 
-  /**
-   * Inits the sitemap
-   */
-  def init () {
-  }
 
   /**
    * Returns a list of Sitemap with all the info relevant to the system

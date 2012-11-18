@@ -82,17 +82,6 @@ object Post {
     postsMap()
     tagMap()
     homeList()
-
- /*   for (i <- 0 to 1000){
-      play.api.Play.current.plugin[MemcachedPlugin].get.api.remove(pageKey+i)
-    }
-
-    tagMap().keys.map { k =>
-      for (i <- 0 to 1000){
-        play.api.Play.current.plugin[MemcachedPlugin].get.api.remove(tagPageKey + i + k)
-      }
-    }
-    */
   }
 
   /**

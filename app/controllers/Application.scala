@@ -1,7 +1,7 @@
 package controllers
 
 import play.api._
-import cache.Cache
+import cache.{Cached, Cache}
 import play.api.mvc._
 import play.api.Play.current
 import models._
@@ -130,34 +130,30 @@ object Application extends Controller {
   /**
    * Returns the RSS feed of the blog
    */
-  def rss() = Action {
-    implicit request =>
-      Logger.info("Application.rss accessed")
-      val render = Cache.getOrElse(rssKey, cacheStorage) {
-        Logger.info("Application.rss")
+  def rss() = Cached(rssKey, cacheStorage) {
+    Action {
+      implicit request =>
+        Logger.info("Application.rss accessed")
         val posts = Post.all()
         if(Logger.isTraceEnabled){
           Logger.trace("Application.rss - posts to show [%s]".format(posts))
         }
-        views.html.rss(posts)
-      }
-      Ok(render).as("application/rss+xml")
+        Ok(views.html.rss(posts)).as("application/rss+xml")
+    }
   }
 
   /**
    * Returns the sitemap file
    */
-  def sitemap() = Action {
-    implicit request =>
-      Logger.info("Application.sitemap accessed")
-      val render = Cache.getOrElse(sitemapKey, cacheStorage) {
-        Logger.info("Application.sitemap")
+  def sitemap() = Cached(sitemapKey, cacheStorage) {
+    Action {
+      implicit request =>
+        Logger.info("Application.sitemap accessed")
         val sitemaps = Sitemap.generateSitemap()
         if(Logger.isTraceEnabled){
           Logger.trace("Application.sitemap - list to show [%s]".format(sitemaps))
         }
-        views.html.sitemap(sitemaps)
-      }
-      Ok(render).as("application/xml")
+        Ok(views.html.sitemap(sitemaps)).as("application/xml")
+    }
   }
 }
