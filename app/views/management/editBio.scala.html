@@ -20,13 +20,6 @@
     @helper.form(action = routes.Management.saveBio(), 'class -> "well") {
 
         @richTextEditor(
-            "short",
-            bioForm("short"),
-            '_label -> Messages("bio.edit.short"),
-            '_error -> bioForm.globalError
-        )
-        <hr/>
-        @richTextEditor(
             "full",
             bioForm("full"),
             '_label -> Messages("bio.edit.full"),

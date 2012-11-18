@@ -1,10 +1,11 @@
-@(projects: List[models.Project], posts: List[models.Post], bio: String)(implicit request: play.api.mvc.RequestHeader)
+@(projects: List[models.Project], posts: List[models.Post])(implicit request: play.api.mvc.RequestHeader)
 
 @import tag._
 @import play.api.Play.current
 
 @moreScripts = {
-    <script src="@routes.Assets.at("javascripts/index.pv.min.js")" type="text/javascript"></script>
+    <script async src="http://cdnjs.cloudflare.com/ajax/libs/tweet/2.1/jquery.tweet.js"></script>
+    <script async src="@routes.Assets.at("javascripts/quotes.pv.min.js")" type="text/javascript"></script>
 }
 
 @main(Messages("app.title"), moreScripts) {
@@ -26,7 +27,7 @@
                       <img src="@play.api.Play.configuration.getString("avatar.url").getOrElse("")" />
                     </div>
                     <div class="span4">
-                        @markdownShow("bio", bio, "font-family: 'Crafty Girls', cursive; font-size: 17px;")
+                        @personalBio.shortBio()
                         <a href="@routes.Application.fullBio()" class="pjaxLink">@Messages("index.fullBio")</a>
                     </div>
                 </div>
@@ -44,7 +45,7 @@
                     </div>
                     <div class="span4">
                         <h3>@p.name</h3>
-                        <p>@markdownShow(p.hashCode.abs.toString, p.comment)</p>
+                        <p>@p.commentHtml</p>
                         <a href="@p.link" target="_blank">@p.link</a>
                     </div>
                 </div>
@@ -91,7 +92,8 @@
                         </div>
                         <div class="row">
                             <div class="span3">
-                                @twitter()
+                                @* Twitter summary *@
+                                <div class="tweet">loading tweets...&nbsp;</div>
                             </div>
                         </div>
                     </div>
@@ -103,7 +105,7 @@
                         <h4 class="indexSection">@Messages("index.contact")</h4>
                     </div>
                 </div>
-                @contact()
+                @contact.contact()
 
                 @*Trivia*@
                 <div class="row">
@@ -113,7 +115,7 @@
                 </div>
                 <div class="row">
                     <div class="span6">
-                        @trivia()
+                        @trivia.trivia()
                     </div>
                 </div>
 

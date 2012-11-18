@@ -7,6 +7,7 @@ import play.api.i18n.Messages
 import play.api.mvc.{Controller}
 import models._
 import java.util
+import specs2.html
 
 /**
  * Created with IntelliJ IDEA.
@@ -120,8 +121,7 @@ object Management extends Controller with AccessControl {
   // form to store bio
   val bioForm: Form[Bio] = Form(
     mapping(
-      "full" -> nonEmptyText,
-      "short" -> nonEmptyText
+      "full" -> nonEmptyText
     )(Bio.apply)(Bio.unapply)
   )
 
@@ -131,7 +131,7 @@ object Management extends Controller with AccessControl {
   def editBio() = isDev {
     implicit request =>
       Logger.info("Management.editBio accessed")
-      val bio = new Bio(Bio.getFullBio(), Bio.getBio())
+      val bio = new Bio(Bio.getFullBio())
       Ok(views.html.management.editBio(bioForm.fill(bio)))
   }
 
@@ -166,7 +166,11 @@ object Management extends Controller with AccessControl {
       "added" -> date,
       "comment" -> nonEmptyText,
       "status" -> nonEmptyText
-    )(Project.apply)(Project.unapply)
+    ){
+      (id, name, image, link, added, comment, status) => Project(id, name, image, link, added, comment, status)
+    }{
+      p: Project => Some(p.id, p.name, p.image, p.link, p.added, p.comment, p.status)
+    }
   )
 
   /**

@@ -4,6 +4,7 @@ import java.util.Date
 import play.api.Logger
 import play.api.cache.Cache
 import play.api.Play.current
+import play.api.templates.Html
 
 /**
  * Stores an element to check later
@@ -26,7 +27,7 @@ import play.api.Play.current
  * Each entry is an element in the json array. Images are all loaded relative from "public/images/projects/"
  *
  */
-case class Project(id: Int, name: String, image: String, link: String, added: Date, comment: String, status: String)
+case class Project(id: Int, name: String, image: String, link: String, added: Date, comment: String, status: String, commentHtml: Html = Html(""), statusHtml : Html = Html(""))
 
 object Project {
 

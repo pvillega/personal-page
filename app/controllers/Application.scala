@@ -15,22 +15,24 @@ object Application extends Controller {
   //Value used by caches when storing data, to facilitate working in dev environment (in production with no config it defaults to 24h)
   val cacheStorage = Play.configuration.getInt("memcached.time").getOrElse(86400)
 
-  val rssKey = "rss"
-  val sitemapKey = "sitemap"
+  val indexKey = "indexPage"
+  val rssKey = "rssPage"
+  val sitemapKey = "sitemapPage"
 
   /**
    * Shows the main page of the application
    */
-  def index = Action {
-    implicit request =>
-      Logger.info("Application.index accessed")
-      val projects = Project.homeList()
-      val bio = Bio.getBio()
-      val posts = Post.homeList()
-      if(Logger.isTraceEnabled){
-        Logger.trace("Application.index - projects [%s] bio [%s]".format(projects, bio))
-      }
-      Ok(views.html.index(projects, posts, bio))
+  def index = Cached(indexKey, cacheStorage) {
+    Action {
+      implicit request =>
+        Logger.info("Application.index accessed")
+        val projects = Project.homeList()
+        val posts = Post.homeList()
+        if(Logger.isTraceEnabled){
+          Logger.trace("Application.index - projects [%s] posts[%s]".format(projects, posts))
+        }
+        Ok(views.html.index(projects, posts))
+    }
   }
 
   /**

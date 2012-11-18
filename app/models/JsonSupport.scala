@@ -5,6 +5,7 @@ import scala.Array
 import play.api.libs.json._
 import java.util.Scanner
 import java.io.{FileReader, FileWriter, File}
+import play.api.templates.Html
 
 /**
  * Created with IntelliJ IDEA.
@@ -110,8 +111,10 @@ object JsonSupport {
       image = (json \ "image").as[String],
       link = (json \ "link").as[String],
       added = dateFormat.parse((json \ "added").as[String]),
-      comment =(json \ "comment").as[String],
-      status = (json \ "status").as[String]
+      comment = (json \ "comment").as[String],
+      status = (json \ "status").as[String],
+      commentHtml = Html(MarkdownSupport.convertToHtml((json \ "comment").as[String])),
+      statusHtml = Html(MarkdownSupport.convertToHtml((json \ "status").as[String]))
     )
   }
 

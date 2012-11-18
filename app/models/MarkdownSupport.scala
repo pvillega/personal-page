@@ -54,25 +54,23 @@ object MarkdownSupport {
     f.delete()
   }
 
+  // Engine for conversion from Markdown to HTML
+  val manager = new ScriptEngineManager()
+  val engine = manager.getEngineByName("javascript")
+  val input = engine.createBindings().asInstanceOf[Bindings]
+  engine.setBindings(input, ScriptContext.ENGINE_SCOPE);
+  val source = new File("public/javascripts/showdown.js")
+
   /**
    * Converts the given markdown into HTML
    * @param markdown the markdown to turn into HTML
    */
   def convertToHtml(markdown: String) = {
-    val manager = new ScriptEngineManager()
-    val engine = manager.getEngineByName("javascript")
-
-    val b = engine.createBindings().asInstanceOf[Bindings]
-    val f = new File("public/javascripts/showdown.js")
-    val reader = new FileReader(f)
-
+    val reader = new FileReader(source)
     try {
-      b.put("markdownText", markdown)
-      engine.setBindings(b, ScriptContext.ENGINE_SCOPE);
-
+      input.put("markdownText", markdown)
       engine.eval(reader).asInstanceOf[String]
-    }
-    catch {
+    } catch {
       case e: javax.script.ScriptException =>
         "The script had an error: " + e.getMessage();
     }
