@@ -1,8 +1,8 @@
-@(title: String)(content: Html)(implicit request: play.api.mvc.RequestHeader)
+@(title: String, moreJavascript: Html = Html(""))(content: Html)(implicit request: play.api.mvc.RequestHeader)
 
 @import tag._
 
-@main(title) {
+@main(title, moreJavascript) {
         @navbar()
         <div class="row">
             <div class="span3 hideMobile">

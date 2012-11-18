@@ -7,7 +7,11 @@
 
 @import tag._
 
-@layout(Messages("area.manageLinks")) {
+@moreScripts = {
+<script async src="@routes.Assets.at("javascripts/pagedown.pv.min.js")" type="text/javascript"></script>
+}
+
+@layout(Messages("area.manageLinks"), moreScripts) {
     <div class="row">
         <div class="span9">
             <h4 class="index">@Messages("links.edit")</h4>
