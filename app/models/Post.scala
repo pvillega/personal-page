@@ -4,6 +4,7 @@ import java.util.Date
 import play.api.cache.Cache
 import play.api.Logger
 import play.api.Play.current
+import play.api.templates.Html
 
 /**
  * Stores an element to check later
@@ -27,9 +28,9 @@ import play.api.Play.current
  *
  */
 case class Post(id: Int, title: String, published: Date, tags: Option[Array[String]], file: String) {
-  lazy val slug = URLSupport.slugify(title)
+  val slug = URLSupport.slugify(title)
 
-  lazy val summary = {
+  val summary = {
     val content = Post.getContent(this)
     val pos = if (content.size < 500) { content.size
     } else {
@@ -38,6 +39,8 @@ case class Post(id: Int, title: String, published: Date, tags: Option[Array[Stri
     }
     content.substring(0, pos)
   }
+
+  val summaryHtml = Html(MarkdownSupport.convertToHtml(summary))
 }
 
 /**
@@ -60,6 +63,8 @@ object Post {
   private val homeKey = "postHome"
   private val pageKey = "allPt"
   private val tagPageKey = "tgPt"
+  private val postContentKey = "pCnt"
+  private val postContentHtmlKey = "pCntHtml"
 
   /**
    * Loads all posts from disk
@@ -82,6 +87,7 @@ object Post {
     postsMap()
     tagMap()
     homeList()
+    all().map { post => getContentAsHtml(post) }
   }
 
   /**
@@ -195,7 +201,7 @@ object Post {
    */
   def getContent(post: Post)= {
     Logger.info("Post.getContent - retrieving content of post with id [%d]".format(post.id))
-    Cache.getOrElse("pCnt"+post.id, controllers.Application.cacheStorage) {
+    Cache.getOrElse(postContentKey+post.id, controllers.Application.cacheStorage) {
       Logger.info("Post.getContent - content not in cache for post with id [%d], loading".format(post.id))
       MarkdownSupport.loadMarkdown(pathToPosts + post.file)
     }
@@ -208,10 +214,10 @@ object Post {
    */
   def getContentAsHtml(post: Post) = {
     Logger.info("Post.getContentAsHtml - retrieving content of post with id [%d] as html".format(post.id))
-    Cache.getOrElse("pCntHtml"+post.id, controllers.Application.cacheStorage) {
+    Cache.getOrElse(postContentHtmlKey+post.id, controllers.Application.cacheStorage) {
       Logger.info("Post.getContentAsHtml - content as html not in cache for post with id [%d], loading".format(post.id))
-      val markdown = MarkdownSupport.loadMarkdown(pathToPosts + post.file)
-      MarkdownSupport.convertToHtml(markdown)
+      val markdown = getContent(post)
+      Html(MarkdownSupport.convertToHtml(markdown))
     }
   }
 

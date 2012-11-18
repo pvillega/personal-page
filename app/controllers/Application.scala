@@ -19,6 +19,9 @@ object Application extends Controller {
   val fullBioKey = "fullBioPage"
   val projectsKey = "projectsPage"
   val archiveKey = "archivePage"
+  val blogKey = "blogPage"
+  val taggedKey = "tagPage"
+  val postKey = "postPage"
   val rssKey = "rssPage"
   val sitemapKey = "sitemapPage"
 
@@ -87,14 +90,16 @@ object Application extends Controller {
    * Shows the blog page (all posts)
    * @param page the page to show
    */
-  def blog(page: Int) = Action {
-    implicit request =>
-      Logger.info("Application.blog accessed for page[%d]".format(page))
-      val (posts, previous, next) = Post.page(page)
-      if(Logger.isTraceEnabled){
-        Logger.trace("Application.blog - posts to show [%s]".format(posts))
-      }
-      Ok(views.html.application.posts(posts, previous, next, page))
+  def blog(page: Int) = Cached(blogKey+page, cacheStorage) {
+    Action {
+      implicit request =>
+        Logger.info("Application.blog accessed for page[%d]".format(page))
+        val (posts, previous, next) = Post.page(page)
+        if(Logger.isTraceEnabled){
+          Logger.trace("Application.blog - posts to show [%s]".format(posts))
+        }
+        Ok(views.html.application.posts(posts, previous, next, page))
+    }
   }
 
   /**
@@ -102,14 +107,16 @@ object Application extends Controller {
    * @param tag the tag used to filter posts by
    * @param page the page to show
    */
-  def tagged(tag: String, page: Int) = Action {
-    implicit request =>
-      Logger.info("Application.tagged accessed for tag[%s] page[%d]".format(tag, page))
-      val (posts, previous, next) = Post.tagged(tag, page)
-      if(Logger.isTraceEnabled){
-        Logger.trace("Application.tagged - posts to show [%s]".format(posts))
-      }
-      Ok(views.html.application.tagged(posts, previous, next, page, tag))
+  def tagged(tag: String, page: Int) = Cached(taggedKey+tag+page, cacheStorage) {
+    Action {
+      implicit request =>
+        Logger.info("Application.tagged accessed for tag[%s] page[%d]".format(tag, page))
+        val (posts, previous, next) = Post.tagged(tag, page)
+        if(Logger.isTraceEnabled){
+          Logger.trace("Application.tagged - posts to show [%s]".format(posts))
+        }
+        Ok(views.html.application.tagged(posts, previous, next, page, tag))
+    }
   }
 
   /**
@@ -121,21 +128,23 @@ object Application extends Controller {
    * @param day the day of publication - only for url purposes
    * @return
    */
-  def post(id: Int, slug: String, year: String, month: String, day: String) = Action {
-    implicit request =>
-      Logger.info("Application.post accessed for id[%d] slug[%s][%s-%s-%s]".format(id, slug, year, month, day))
-      Post.getById(id) match {
-        case Some(post) => {
-          if(Logger.isTraceEnabled){
-            Logger.trace("Application.post - post to show [%s]".format(post))
+  def post(id: Int, slug: String, year: String, month: String, day: String) = Cached(postKey+id, cacheStorage) {
+    Action {
+      implicit request =>
+        Logger.info("Application.post accessed for id[%d] slug[%s][%s-%s-%s]".format(id, slug, year, month, day))
+        Post.getById(id) match {
+          case Some(post) => {
+            if(Logger.isTraceEnabled){
+              Logger.trace("Application.post - post to show [%s]".format(post))
+            }
+            Ok(views.html.application.post(post))
           }
-          Ok(views.html.application.post(post))
+          case _ => {
+            Logger.warn("Application.post - post [%d] not found".format(id))
+            NotFound(views.html.errors.error404(request.path))
+          }
         }
-        case _ => {
-          Logger.warn("Application.post - post [%d] not found".format(id))
-          NotFound(views.html.errors.error404(request.path))
-        }
-      }
+    }
   }
 
   /**

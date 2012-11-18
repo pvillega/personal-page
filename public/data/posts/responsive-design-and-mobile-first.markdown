@@ -1,5 +1,3 @@
-# Responsive pages
-
 Mobile browsing is becoming the norm. With the advent of devices like the new iPad or the Nexus 7, predictions that [mobile will surpass desktop in 2014](http://blog.aids.gov/2011/10/mobile-internet-use-surpassing-desktop-internet-use-by-2014.html) seem wrong: it may happen [even earlier](http://www.mobify.com/blog/mobile-web-growing-8-times-faster-than-web/). I find myself, loving desktops as I do, using Internet on my mobile more and more often. That constant access to the net is so handy...
 
 But as a web developer this provides a new challenge: your site needs to work properly both in Mobile and Desktop browsers (and in all the flavours of each: Chrome, Safari, Firefox, IE, etc.). Not so long ago this was solved by having two versions of your site, a mobile one and the classic one, where you redirected the user to the correct one as per their browser (and the mobile site was usually a poorer experience). 

@@ -24,7 +24,7 @@
     </div>
     <div class="row">
         <div class="span9 postContent">
-            @markdownShow(post.id.toString, models.Post.getContent(post))
+            @models.Post.getContentAsHtml(post)
         </div>
     </div>
 
@@ -54,6 +54,6 @@
         </div>
     </div>
 
-    <!-- Add disques comments -->
+    <!-- Add disqus comments -->
     @disqus(post.id.toString)
 }

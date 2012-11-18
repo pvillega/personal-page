@@ -15,7 +15,7 @@
             <author>pere.villega@@gmail.com (Pere Villega)</author>
             <pubDate>@post.published.format("yyyy-MM-dd'T'HH:mm:ss.SSSZ")</pubDate>
             <guid>@routes.Application.post(post.id, post.slug, post.published.format("yyyy"), post.published.format("MM"), post.published.format("dd")).absoluteURL()</guid>
-            <description><![CDATA[@Html(models.Post.getContentAsHtml(post))]]></description>
+            <description><![CDATA[@models.Post.getContentAsHtml(post)]]></description>
         </item>
         }
     </channel>
