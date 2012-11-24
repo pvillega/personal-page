@@ -9,7 +9,9 @@ object ApplicationBuild extends Build {
 
     val appDependencies = Seq(
       // https://github.com/typesafehub/play-plugins/tree/master/mailer
-      "com.typesafe" %% "play-plugins-mailer" % "2.0.2"
+      "com.typesafe" %% "play-plugins-mailer" % "2.0.2",
+      // MakdownJ https://github.com/myabc/markdownj
+      "org.markdownj" % "markdownj" % "0.3.0-1.0.2b4"
     )
 
     val main = PlayProject(appName, appVersion, appDependencies, mainLang = SCALA).settings(

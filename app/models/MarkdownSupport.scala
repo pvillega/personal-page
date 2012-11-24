@@ -6,6 +6,7 @@ import java.io.{InputStreamReader, FileWriter, FileReader, File}
 import javax.script.ScriptContext
 import javax.script.ScriptEngineManager
 import javax.script.Bindings
+import com.petebevin.markdown.MarkdownProcessor
 
 /**
  * Created with IntelliJ IDEA.
@@ -54,26 +55,14 @@ object MarkdownSupport {
     f.delete()
   }
 
-  // Engine for conversion from Markdown to HTML
-  val manager = new ScriptEngineManager()
-  val engine = manager.getEngineByName("javascript")
-  val input = engine.createBindings().asInstanceOf[Bindings]
-  engine.setBindings(input, ScriptContext.ENGINE_SCOPE);
-  val source = new File("public/javascripts/showdown.js")
+  val mProcessor = new MarkdownProcessor()
 
   /**
    * Converts the given markdown into HTML
    * @param markdown the markdown to turn into HTML
    */
   def convertToHtml(markdown: String) = {
-    val reader = new FileReader(source)
-    try {
-      input.put("markdownText", markdown)
-      engine.eval(reader).asInstanceOf[String]
-    } catch {
-      case e: javax.script.ScriptException =>
-        "The script had an error: " + e.getMessage();
-    }
+    mProcessor.markdown(markdown)
   }
 
 }
