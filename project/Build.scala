@@ -1,6 +1,7 @@
 import sbt._
 import Keys._
 import PlayProject._
+import cloudbees.Plugin._
 
 object ApplicationBuild extends Build {
 
@@ -14,9 +15,13 @@ object ApplicationBuild extends Build {
       "org.markdownj" % "markdownj" % "0.3.0-1.0.2b4"
     )
 
-    val main = PlayProject(appName, appVersion, appDependencies, mainLang = SCALA).settings(
+    val main = PlayProject(appName, appVersion, appDependencies, mainLang = SCALA)
+      .settings(cloudBeesSettings :_*)
+      .settings(
       // Add your own project settings here
-      lessEntryPoints <<= baseDirectory(_ / "app" / "assets" / "stylesheets" ** "style.less")
+      lessEntryPoints <<= baseDirectory(_ / "app" / "assets" / "stylesheets" ** "style.less"),
+
+      CloudBees.applicationId := Some("PersonalPage")
     )
 
 }
