@@ -1,11 +1,12 @@
 package models
 
-import play.api.Logger
+import play.api.{Play, Logger}
 import scala.Array
 import play.api.libs.json._
 import java.util.Scanner
-import java.io.{FileReader, FileWriter, File}
+import java.io.{IOException, FileWriter, File}
 import play.api.templates.Html
+import play.api.Play.current
 
 /**
  * Created with IntelliJ IDEA.
@@ -19,7 +20,7 @@ object JsonSupport {
   val linksPath = "public/data/dump/list.json"
 
   /**
-   * Stores the list of Posts into the given file as json
+   * Stores the list of Posts into the given file as json   *
    * @param list the list of post to store
    */
   def updatePosts(list: List[Post]) = {
@@ -165,6 +166,7 @@ object JsonSupport {
 
   /**
    * Saves the given data as json on the given file
+   * NOTE: only used in dev mode
    * @param path path of the file to save
    * @param data data to save
    */
@@ -183,8 +185,11 @@ object JsonSupport {
    */
   private def loadJsonFromFile(filePath : String) = {
     Logger.info("JsonSupport.loadJsonFromFile - Loading data from: %s".format(filePath))
-    val source = new File(filePath)
-    val scanner = new Scanner(new FileReader(source));
+    val inputStream = Play.resourceAsStream(filePath) match {
+      case Some(is) => is
+      case _ => throw new IOException("file not found: " + filePath)
+    }
+    val scanner = new Scanner(inputStream);
     val buffer = new StringBuilder
     while ( scanner.hasNextLine() ){
       buffer.append(scanner.nextLine())
