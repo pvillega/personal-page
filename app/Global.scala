@@ -12,7 +12,6 @@ import play.api._
 import mvc._
 import play.api.mvc.Results._
 import play.api.Play.current
-import com.typesafe.plugin._
 
 object Global extends GlobalSettings {
 
@@ -46,14 +45,6 @@ object Global extends GlobalSettings {
   override def onError(request: RequestHeader, ex: Throwable) = {
     Logger.error("onError executed for request %s".format(request), ex)
 
-    if(play.api.Play.isProd) {
-      val mail = use[MailerPlugin].email
-      mail.setSubject("Error in Personal Page")
-      mail.addRecipient("Administrator <%s>".format(Application.errorReportingMail), Application.errorReportingMail)
-      mail.addFrom("Personal Page Admin <noreply@billeteo.com>")
-      mail.send( "Error detected in Personal Page. \n Request: \n %s  \n\n Exception: \n %s \n\n %s".format(request, ex.getMessage, ex.getStackTrace.toList.mkString("\n")) )
-    }
-
     InternalServerError(
       views.html.errors.error(ex)(request)
     )
@@ -76,14 +67,6 @@ object Global extends GlobalSettings {
    */
   override def onBadRequest(request : RequestHeader, error : scala.Predef.String) = {
     Logger.error("onBadRequest executed for request %s on error %s".format(request, error))
-
-    if(play.api.Play.isProd) {
-      val mail = use[MailerPlugin].email
-      mail.setSubject("Bad Request in Personal Page")
-      mail.addRecipient("Administrator <%s>".format(Application.errorReportingMail), Application.errorReportingMail)
-      mail.addFrom("Personal Page Admin <noreply@billeteo.com>")
-      mail.send( "Bad Request received in Personal Page\n. Request: %s  \n\n Error: \n %s".format(request, error) )
-    }
 
     NotFound(
       views.html.errors.error404(request.path)(request)
