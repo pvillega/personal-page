@@ -1,0 +1,3 @@
+#!/usr/bin/env sh
+
+exec java $* -cp "`dirname $0`/lib/*" -Xmx384m -Xss512k -server -XX:+UseCompressedOops -XX:+PerfDisableSharedMem -Dhttp.port=9000 -Dfile.encoding=UTF8 -Ddisqus.forum=pvpersonalpage -Dgoogle.analytics=UA-32390320-1 -Dlogger.application=INFO play.core.server.NettyServer `dirname $0`
