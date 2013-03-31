@@ -61,13 +61,13 @@ object JsonSupport {
       )
     }
 
-    def reads(json: JsValue): Post = Post(
+    def reads(json: JsValue): JsResult[Post] = JsSuccess(Post(
       id = (json \ "id").as[Int],
       title = (json \ "title").as[String],
       published = dateFormat.parse((json \ "published").as[String]),
       tags =(json \ "tags").as[Option[Array[String]]],
       file = (json \ "file").as[String]
-    )
+    ))
   }
 
 
@@ -106,7 +106,7 @@ object JsonSupport {
       )
     )
 
-    def reads(json: JsValue): Project = Project(
+    def reads(json: JsValue): JsResult[Project] = JsSuccess(Project(
       id = (json \ "id").as[Int],
       name = (json \ "name").as[String],
       image = (json \ "image").as[String],
@@ -116,7 +116,7 @@ object JsonSupport {
       status = (json \ "status").as[String],
       commentHtml = Html(MarkdownSupport.convertToHtml((json \ "comment").as[String])),
       statusHtml = Html(MarkdownSupport.convertToHtml((json \ "status").as[String]))
-    )
+    ))
   }
 
   /**
@@ -153,7 +153,7 @@ object JsonSupport {
       )
     )
 
-    def reads(json: JsValue): Link = Link(
+    def reads(json: JsValue): JsResult[Link] = JsSuccess(Link(
       id = (json \ "id").as[Int],
       link = (json \ "link").as[String],
       comment =(json \ "comment").as[String],
@@ -161,7 +161,7 @@ object JsonSupport {
       category = (json \ "category").as[String],
       subcategory = (json \ "subcategory").as[String],
       subject = (json \ "subject").as[String]
-    )
+    ))
   }
 
   /**
