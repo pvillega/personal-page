@@ -20,16 +20,6 @@ This application uses:
 
 This software is ready to be used in Heroku, but it can be adapted for other platforms easily.
 
-## How to deploy in Heroku
-
-No DB is required to deploy the application. You will require a Heroku mail addon and a Heroku memcache addon for this site, otherwise you'll get critical errors. You may disable them if you don't want to use them.
-
-The Procfile command uses a custom variable (**MYCONFIG**) that is expected to contain additional Java environment values. For example:
-
-> MYCONFIG=-Dmail.username=user -Dmail.password=password
-
-You can edit the Procfile to change the way this works.
-
 ## Edit content
 
 In dev mode you can access the administration area that allows you to edit content like About, Posts, Link Dump, etc.
