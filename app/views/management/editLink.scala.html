@@ -42,7 +42,7 @@
         )
         <script type="text/javascript">
             $(function() {
-                tagSearch('category', @models.Link.getAllCategories());
+                tagSearch('category', @Html(models.Link.getAllCategories()) );
             });
         </script>
 
@@ -55,7 +55,7 @@
         )
         <script type="text/javascript">
             $(function() {
-                tagSearch('category', @models.Link.getAllSubCategories());
+                tagSearch('category', @Html(models.Link.getAllSubCategories()) );
             });
         </script>
 
@@ -67,7 +67,7 @@
         )
         <script type="text/javascript">
             $(function() {
-                tagSearch('category', @models.Link.getAllSubjects());
+                tagSearch('category', @Html(models.Link.getAllSubjects()) );
             });
         </script>
 
